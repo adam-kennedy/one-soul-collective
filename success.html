@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — One Soul Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F7F2EC;
+  --warm-white: #FDFAF6;
+  --blush: #D4A5A0;
+  --terracotta: #B5624A;
+  --sage: #8A9E8C;
+  --deep: #2C2420;
+  --gold: #C9A96E;
+  --mist: #E8E0D5;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--deep);
+  color: var(--warm-white);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(181,98,74,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 45% at 80% 20%, rgba(138,158,140,0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+.card {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  width: 100%;
+}
+.logo-mark {
+  margin: 0 auto 36px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.2s forwards;
+}
+.check-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(138,158,140,0.15);
+  border: 1px solid rgba(138,158,140,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.4s forwards;
+}
+.eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.55s forwards;
+}
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2.8rem, 6vw, 4.2rem);
+  color: var(--warm-white);
+  line-height: 1.05;
+  margin-bottom: 22px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.65s forwards;
+}
+h1 em { color: var(--gold); font-style: italic; }
+.divider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 24px;
+  opacity: 0;
+  animation: expandLine 1s ease 0.8s forwards;
+}
+.message {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--blush);
+  line-height: 1.65;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.9s forwards;
+}
+.sub-message {
+  font-size: 0.8rem;
+  letter-spacing: 0.07em;
+  color: rgba(253,250,246,0.45);
+  line-height: 1.7;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 1.0s forwards;
+}
+.back-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid rgba(201,169,110,0.5);
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: all 0.3s;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 1.1s forwards;
+}
+.back-btn:hover {
+  background: var(--gold);
+  color: var(--deep);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.brand-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes expandLine {
+  from { opacity: 0; width: 0; }
+  to { opacity: 1; width: 48px; }
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <svg class="logo-mark" width="52" height="52" viewBox="0 0 52 52" fill="none">
+    <circle cx="26" cy="26" r="24.5" stroke="#C9A96E" stroke-width="0.6" opacity="0.3"/>
+    <path d="M26 10 C26 10, 39 18, 39 28 C39 35.5 33 40.5 26 44 C19 40.5 13 35.5 13 28 C13 18 26 10 26 10Z" fill="none" stroke="#C9A96E" stroke-width="1.3"/>
+    <circle cx="26" cy="28" r="4.5" fill="#B5624A" opacity="0.9"/>
+    <circle cx="26" cy="28" r="1.8" fill="#C9A96E"/>
+  </svg>
+
+  <div class="check-circle">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <path d="M6 14L11 19L22 8" stroke="#8A9E8C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <p class="eyebrow">Order Confirmed</p>
+  <h1>Thank <em>you</em></h1>
+  <div class="divider"></div>
+  <p class="message">"A gift chosen with soul is a gift remembered forever."</p>
+  <p class="sub-message">
+    Your order is confirmed and on its way.<br>
+    A receipt has been sent to your email.
+  </p>
+  <a href="index.html" class="back-btn">Continue Shopping</a>
+</div>
+<div class="brand-line"></div>
+</body>
+</html>

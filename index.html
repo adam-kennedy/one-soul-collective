@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Soul Collective — Gifts that touch the soul you love.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --cream: #F7F2EC;
+  --warm-white: #FDFAF6;
+  --blush: #D4A5A0;
+  --terracotta: #B5624A;
+  --sage: #8A9E8C;
+  --deep: #2C2420;
+  --gold: #C9A96E;
+  --mist: #E8E0D5;
+  --shadow: rgba(44,36,32,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--deep);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── SETUP BANNER ── */
+.setup-banner {
+  background: #2C2420;
+  border-bottom: 1px solid var(--terracotta);
+  color: rgba(253,250,246,0.85);
+  text-align: center;
+  padding: 10px 24px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.setup-banner strong { color: var(--gold); }
+.setup-banner.hidden { display: none; }
+.setup-dismiss {
+  background: none;
+  border: 1px solid rgba(201,169,110,0.4);
+  color: var(--gold);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  transition: all 0.2s;
+}
+.setup-dismiss:hover { background: var(--gold); color: var(--deep); }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(253,250,246,0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--mist);
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 24px var(--shadow); }
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-logo-svg { width: 34px; height: 34px; }
+.nav-logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: var(--deep);
+  line-height: 1;
+  white-space: nowrap;
+}
+.nav-logo-name em { color: var(--gold); font-style: italic; }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a8a82;
+  transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--terracotta); }
+
+.cart-btn {
+  background: none;
+  border: 1px solid var(--mist);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--deep);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.cart-btn:hover { background: var(--deep); color: var(--warm-white); border-color: var(--deep); }
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  background: var(--terracotta);
+  color: white;
+  font-size: 0.58rem;
+  border-radius: 50%;
+  font-weight: 500;
+}
+.cart-count.bump { animation: bump 0.3s ease; }
+@keyframes bump {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.45); }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 88vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-left {
+  background: var(--deep);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 70px 80px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at -10% 110%, rgba(181,98,74,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% -10%, rgba(138,158,140,0.14) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 520px; }
+
+.hero-eyebrow {
+  font-size: 0.58rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.2s forwards;
+}
+
+.hero-logomark {
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.4s forwards;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(3.2rem, 5vw, 5.2rem);
+  color: var(--warm-white);
+  line-height: 1.0;
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.55s forwards;
+}
+.hero h1 em { color: var(--gold); font-style: italic; }
+
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--blush);
+  letter-spacing: 0.04em;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.7s forwards;
+}
+
+.hero-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: expandLine 1s ease 0.85s forwards;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 14px 38px;
+  background: var(--gold);
+  color: var(--deep);
+  text-decoration: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 1.0s forwards;
+}
+.hero-cta:hover { background: var(--warm-white); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(44,36,32,0.25); }
+
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+.hero-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.72;
+  transform: scale(1.04);
+  animation: slowZoom 12s ease forwards;
+}
+.hero-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--deep) 0%, rgba(44,36,32,0.15) 25%, transparent 50%);
+  z-index: 1;
+}
+
+/* ── PILLARS STRIP ── */
+.pillars-strip {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--mist);
+  padding: 52px 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+.pillar-item { display: flex; align-items: flex-start; gap: 20px; }
+.pillar-icon { width: 34px; height: 34px; flex-shrink: 0; margin-top: 3px; }
+.pillar-item h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--deep);
+  margin-bottom: 7px;
+}
+.pillar-item p { font-size: 0.78rem; line-height: 1.75; color: #8a7a72; }
+
+/* ── SHOP SECTION ── */
+.shop { padding: 80px 80px 100px; }
+
+.shop-header {
+  margin-bottom: 40px;
+}
+.section-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.shop-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  color: var(--deep);
+}
+.shop-header h2 em { color: var(--terracotta); font-style: italic; }
+
+/* ── CATEGORY TABS ── */
+.category-tabs {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.tab {
+  padding: 9px 22px;
+  border: 1px solid var(--mist);
+  background: transparent;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a8a82;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+.tab:hover { border-color: var(--deep); color: var(--deep); }
+.tab.active { background: var(--deep); color: var(--warm-white); border-color: var(--deep); }
+
+/* ── PRODUCT GRID ── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.product-card {
+  background: var(--warm-white);
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(44,36,32,0.13);
+  z-index: 1;
+}
+.product-card.hidden { display: none; }
+.product-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 0.52rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+}
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--mist);
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+}
+.product-card:hover .product-image img { transform: scale(1.06); }
+
+.product-info { padding: 24px 26px 28px; }
+.product-cat-tag {
+  font-size: 0.56rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 9px;
+  font-weight: 400;
+}
+.product-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.22rem;
+  font-weight: 400;
+  color: var(--deep);
+  margin-bottom: 9px;
+  line-height: 1.2;
+}
+.product-desc {
+  font-size: 0.77rem;
+  line-height: 1.75;
+  color: #9a8a82;
+  margin-bottom: 22px;
+}
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.product-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.28rem;
+  font-weight: 400;
+  color: var(--deep);
+}
+.add-btn {
+  background: none;
+  border: 1px solid var(--mist);
+  padding: 8px 18px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deep);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+.add-btn:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
+.add-btn.added { background: var(--sage); color: white; border-color: var(--sage); }
+
+/* ── CART OVERLAY ── */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44,36,32,0.45);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(2px);
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+
+/* ── CART DRAWER ── */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  max-width: 100vw;
+  height: 100vh;
+  background: var(--warm-white);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: -10px 0 60px rgba(44,36,32,0.18);
+}
+.cart-drawer.open { transform: translateX(0); }
+
+.cart-header {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--mist);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.cart-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 1.55rem;
+  color: var(--deep);
+}
+.cart-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9a8a82;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+.cart-close:hover { color: var(--terracotta); }
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 32px;
+}
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 18px;
+  padding-bottom: 60px;
+}
+.cart-empty p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: #b0a09a;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.cart-empty svg { opacity: 0.2; }
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--mist);
+  align-items: start;
+}
+.cart-item-img {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  background: var(--mist);
+}
+.cart-item-cat {
+  font-size: 0.56rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 4px;
+}
+.cart-item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--deep);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+.cart-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--mist);
+}
+.qty-btn {
+  background: none;
+  border: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--deep);
+  transition: background 0.15s;
+  font-family: 'Jost', sans-serif;
+}
+.qty-btn:hover { background: var(--mist); }
+.qty-num { font-size: 0.82rem; min-width: 18px; text-align: center; }
+.cart-item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--deep);
+}
+.remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c5b8b2;
+  font-family: 'Jost', sans-serif;
+  padding: 6px 0 0;
+  display: block;
+  transition: color 0.2s;
+}
+.remove-btn:hover { color: var(--terracotta); }
+
+/* ── CART FOOTER ── */
+.cart-footer {
+  padding: 24px 32px 32px;
+  border-top: 1px solid var(--mist);
+  flex-shrink: 0;
+}
+
+.shipping-progress { margin-bottom: 22px; }
+.shipping-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  letter-spacing: 0.07em;
+  color: #9a8a82;
+  margin-bottom: 9px;
+}
+.shipping-labels.earned { color: var(--sage); }
+.progress-track {
+  width: 100%;
+  height: 2px;
+  background: var(--mist);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--sage), #a8c4aa);
+  transition: width 0.5s ease;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.total-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #9a8a82;
+}
+.total-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem;
+  color: var(--deep);
+}
+.shipping-note {
+  font-size: 0.65rem;
+  color: var(--sage);
+  text-align: right;
+  min-height: 18px;
+  margin-bottom: 18px;
+  letter-spacing: 0.04em;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--deep);
+  color: var(--warm-white);
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 400;
+  transition: background 0.25s;
+}
+.checkout-btn:hover { background: #B5624A; }
+.checkout-btn:disabled { background: var(--mist); color: #9a8a82; cursor: not-allowed; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--deep);
+  color: var(--warm-white);
+  padding: 13px 24px;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  z-index: 500;
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(44,36,32,0.25);
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--deep);
+  padding: 80px 80px 40px;
+  position: relative;
+  overflow: hidden;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 64px;
+  margin-bottom: 64px;
+}
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 1.6rem;
+  color: var(--warm-white);
+  margin-bottom: 18px;
+  display: block;
+}
+.footer-brand-name em { color: var(--gold); font-style: italic; }
+.footer-desc {
+  font-size: 0.78rem;
+  line-height: 1.85;
+  color: rgba(253,250,246,0.45);
+  max-width: 300px;
+}
+.footer-col h4 {
+  font-size: 0.58rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.footer-col a {
+  font-size: 0.78rem;
+  color: rgba(253,250,246,0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.04em;
+}
+.footer-col a:hover { color: var(--blush); }
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid rgba(253,250,246,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: rgba(253,250,246,0.3);
+  text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes expandLine {
+  from { opacity: 0; width: 0; }
+  to { opacity: 1; width: 48px; }
+}
+@keyframes slowZoom {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1000px) {
+  nav { padding: 0 32px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 72px 40px; min-height: 80vh; }
+  .pillars-strip { grid-template-columns: 1fr; padding: 48px 40px; }
+  .shop { padding: 60px 40px 80px; }
+  footer { padding: 60px 40px 36px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  nav { padding: 0 20px; height: 64px; }
+  .hero-left { padding: 64px 24px; }
+  .shop { padding: 48px 20px 64px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .cart-drawer { width: 100vw; }
+  footer { padding: 52px 24px 32px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- SETUP BANNER -->
+<div class="setup-banner" id="setupBanner">
+  <span>⚙️ <strong>Dev Mode:</strong> Add Stripe Price IDs to the PRODUCTS array to enable live checkout. <a href="#" style="color:var(--gold);text-decoration:underline;" onclick="document.getElementById('setupBanner').classList.add('hidden');return false;">Setup guide ↗</a></span>
+  <button class="setup-dismiss" onclick="document.getElementById('setupBanner').classList.add('hidden')">Dismiss</button>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="18.5" stroke="#C9A96E" stroke-width="0.6" opacity="0.35"/>
+      <path d="M20 8 C20 8, 30 14.5, 30 22 C30 27.8 25.5 31.5 20 34 C14.5 31.5 10 27.8 10 22 C10 14.5 20 8 20 8Z" fill="none" stroke="#C9A96E" stroke-width="1.1"/>
+      <circle cx="20" cy="22" r="3.2" fill="#B5624A" opacity="0.9"/>
+      <circle cx="20" cy="22" r="1.3" fill="#C9A96E"/>
+    </svg>
+    <span class="nav-logo-name">One <em>Soul</em> Collective</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#shop" onclick="filterCategory('all',null)">Shop All</a></li>
+    <li><a href="#shop" onclick="filterCategory('tcm',null)">TCM & Herbal</a></li>
+    <li><a href="#shop" onclick="filterCategory('wellness',null)">Wellness</a></li>
+    <li><a href="#shop" onclick="filterCategory('symbolic',null)">Lifestyle</a></li>
+    <li><a href="#shop" onclick="filterCategory('fortune',null)">Good Fortune</a></li>
+  </ul>
+  <button class="cart-btn" onclick="openCart()">
+    Cart &nbsp;<span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-grain"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Well-being · Love · Connection · Quality Life</p>
+      <svg class="hero-logomark" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="24.5" stroke="#C9A96E" stroke-width="0.7" opacity="0.3"/>
+        <path d="M26 10 C26 10, 39 18, 39 28 C39 35.5 33 40.5 26 44 C19 40.5 13 35.5 13 28 C13 18 26 10 26 10Z" fill="none" stroke="#C9A96E" stroke-width="1.3"/>
+        <circle cx="26" cy="28" r="4.5" fill="#B5624A" opacity="0.9"/>
+        <circle cx="26" cy="28" r="1.8" fill="#C9A96E"/>
+      </svg>
+      <h1>One <em>Soul</em><br>Collective</h1>
+      <p class="hero-tagline">"Gifts that touch the soul you love."</p>
+      <div class="hero-divider"></div>
+      <a href="#shop" class="hero-cta">Shop the Collection</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=80" alt="Wellness collection">
+  </div>
+</div>
+
+<!-- BRAND PILLARS -->
+<div class="pillars-strip">
+  <div class="pillar-item">
+    <svg class="pillar-icon" viewBox="0 0 40 40" fill="none">
+      <path d="M20 34C20 34 6 25 6 15.5A8.5 8.5 0 0 1 20 10a8.5 8.5 0 0 1 14 5.5C34 25 20 34 20 34Z" stroke="#B5624A" stroke-width="1.2" fill="none"/>
+      <circle cx="20" cy="20" r="2.5" fill="#B5624A" opacity="0.6"/>
+    </svg>
+    <div>
+      <h3>Love & Connection</h3>
+      <p>Every gift celebrates the quiet moments that hold relationships together.</p>
+    </div>
+  </div>
+  <div class="pillar-item">
+    <svg class="pillar-icon" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="12" stroke="#8A9E8C" stroke-width="1.2"/>
+      <path d="M20 10 L20 20 L27 27" stroke="#8A9E8C" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="2" fill="#8A9E8C"/>
+    </svg>
+    <div>
+      <h3>Well-Being & Balance</h3>
+      <p>Wellness rooted in centuries of Chinese wisdom, curated for modern life.</p>
+    </div>
+  </div>
+  <div class="pillar-item">
+    <svg class="pillar-icon" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,5 24,16 36,16 26,23 30,34 20,27 10,34 14,23 4,16 16,16" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
+    </svg>
+    <div>
+      <h3>Curated Quality</h3>
+      <p>Not everything — the right things. Selected to feel special at every price.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP SECTION -->
+<section class="shop" id="shop">
+  <div class="shop-header">
+    <p class="section-label">The Collection</p>
+    <h2>Gifts Curated for the <em>Soul</em></h2>
+  </div>
+
+  <div class="category-tabs" id="categoryTabs">
+    <button class="tab active" data-cat="all" onclick="filterCategory('all',this)">All Products</button>
+    <button class="tab" data-cat="tcm" onclick="filterCategory('tcm',this)">TCM & Herbal</button>
+    <button class="tab" data-cat="wellness" onclick="filterCategory('wellness',this)">Physical Wellness</button>
+    <button class="tab" data-cat="symbolic" onclick="filterCategory('symbolic',this)">Symbolic & Lifestyle</button>
+    <button class="tab" data-cat="fortune" onclick="filterCategory('fortune',this)">Good Fortune</button>
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Rendered by JS -->
+  </div>
+</section>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close" onclick="closeCart()" aria-label="Close cart">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="shipping-progress">
+      <div class="shipping-labels" id="shippingLabels">
+        <span id="shippingMsg">Free shipping on orders over $75</span>
+        <span id="shippingAway"></span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="cart-total-row">
+      <span class="total-label">Subtotal</span>
+      <span class="total-amount" id="cartTotal">$0.00</span>
+    </div>
+    <div class="shipping-note" id="shippingNote"></div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="proceedToCheckout()">
+      Proceed to Checkout
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-dot"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-name">One <em>Soul</em> Collective</span>
+      <p class="footer-desc">Curated wellness gifts rooted in the wisdom of traditional Chinese practice — for energy, balance, and the beauty of living well. Every item chosen with love, for the people who matter most.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Collections</h4>
+      <ul>
+        <li><a href="#shop" onclick="filterCategory('tcm',null)">TCM & Herbal</a></li>
+        <li><a href="#shop" onclick="filterCategory('wellness',null)">Physical Wellness</a></li>
+        <li><a href="#shop" onclick="filterCategory('symbolic',null)">Symbolic & Lifestyle</a></li>
+        <li><a href="#shop" onclick="filterCategory('fortune',null)">Good Fortune</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Gift Wrapping</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 One Soul Collective · All rights reserved</span>
+    <span>Gifts that touch the soul you love.</span>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// STRIPE CONFIGURATION
+// ════════════════════════════════════════════════════════════
+// SETUP STEPS TO ENABLE CHECKOUT:
+//
+// 1. Stripe Dashboard → Settings → Checkout
+//    → Enable "Allow client-only integration"
+//
+// 2. Stripe Dashboard → Products → Create a Product for each item
+//    → For each Product, create a one-time Price
+//    → Copy the Price ID (starts with price_...)
+//
+// 3. Replace each "price_REPLACE_ME_XX" below with the real Price ID
+//
+// 4. Update successUrl below to your live GitHub Pages URL
+// ════════════════════════════════════════════════════════════
+
+const STRIPE_KEY = 'pk_test_51SviyV46BWw44DYEMFjL4gY8HWcrTviGHaQouezEgIxGVdOUyBBtw45eEKVtDJPO5QFG5DDag38gTbhfc1TUxDxA00xVFWliyz';
+const FREE_SHIPPING_THRESHOLD = 75;
+const SUCCESS_URL = `${window.location.origin}/success.html`;
+const CANCEL_URL = window.location.href;
+
+const stripe = Stripe(STRIPE_KEY);
+
+// ════════════════════════════════════════════════════════════
+// PRODUCT CATALOG
+// Replace priceId values with your Stripe Price IDs
+// ════════════════════════════════════════════════════════════
+const PRODUCTS = [
+  // ── TCM & HERBAL ─────────────────────────────────────────
+  {
+    id: 1,
+    name: "Jasmine Pearl Tea Set",
+    desc: "Hand-rolled jasmine pearls with wolfberry and chrysanthemum — a soothing ritual in every cup.",
+    price: 28.99,
+    category: "tcm",
+    categoryLabel: "TCM & Herbal",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80",
+    priceId: "price_REPLACE_ME_01",
+    featured: true
+  },
+  {
+    id: 2,
+    name: "Red Date & Goji Berry Set",
+    desc: "Nourishing gift set of premium red dates, goji berries, and longan — traditional symbols of vitality and longevity.",
+    price: 34.99,
+    category: "tcm",
+    categoryLabel: "TCM & Herbal",
+    image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80",
+    priceId: "price_REPLACE_ME_02"
+  },
+  {
+    id: 3,
+    name: "Premium Ginseng Tonic",
+    desc: "Centuries-old adaptogen in a beautifully packaged tonic — for energy, mental clarity, and everyday resilience.",
+    price: 54.99,
+    category: "tcm",
+    categoryLabel: "TCM & Herbal",
+    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&q=80",
+    priceId: "price_REPLACE_ME_03"
+  },
+  {
+    id: 4,
+    name: "Aromatherapy Diffuser Kit",
+    desc: "Ultrasonic diffuser paired with lavender and citrus essential oils — calm the mind, uplift the spirit.",
+    price: 42.99,
+    category: "tcm",
+    categoryLabel: "TCM & Herbal",
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=600&q=80",
+    priceId: "price_REPLACE_ME_04",
+    featured: true
+  },
+  {
+    id: 5,
+    name: "Botanical Soap Collection",
+    desc: "Five handcrafted soaps with botanical extracts — rice milk, green tea, lotus blossom, ginger root, and honey.",
+    price: 24.99,
+    category: "tcm",
+    categoryLabel: "TCM & Herbal",
+    image: "https://images.unsplash.com/photo-1600857062241-98e5dba7f35?w=600&q=80",
+    priceId: "price_REPLACE_ME_05"
+  },
+  // ── PHYSICAL WELLNESS ─────────────────────────────────────
+  {
+    id: 6,
+    name: "Jade Gua Sha Tool",
+    desc: "Carved from genuine nephrite jade — for lymphatic drainage, facial contouring, and deeply radiant skin.",
+    price: 22.99,
+    category: "wellness",
+    categoryLabel: "Physical Wellness",
+    image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
+    priceId: "price_REPLACE_ME_06",
+    featured: true
+  },
+  {
+    id: 7,
+    name: "Baoding Health Balls",
+    desc: "Enamel-inlaid chrome steel balls that chime softly — a centuries-old practice for stress relief and hand dexterity.",
+    price: 19.99,
+    category: "wellness",
+    categoryLabel: "Physical Wellness",
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80",
+    priceId: "price_REPLACE_ME_07"
+  },
+  {
+    id: 8,
+    name: "Acupressure Ear Seeds Kit",
+    desc: "24K gold-plated ear seeds with illustrated placement chart — a gentle, wearable way to support calm and focus.",
+    price: 16.99,
+    category: "wellness",
+    categoryLabel: "Physical Wellness",
+    image: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
+    priceId: "price_REPLACE_ME_08"
+  },
+  // ── SYMBOLIC & LIFESTYLE ──────────────────────────────────
+  {
+    id: 9,
+    name: "Calligraphy Art — Peace",
+    desc: "Brushstroke calligraphy of '平和' (peace) on linen-textured paper, framed in natural bamboo — ready to hang.",
+    price: 36.99,
+    category: "symbolic",
+    categoryLabel: "Symbolic & Lifestyle",
+    image: "https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?w=600&q=80",
+    priceId: "price_REPLACE_ME_09",
+    featured: true
+  },
+  {
+    id: 10,
+    name: "Feng Shui Wellness Bracelet",
+    desc: "Natural gemstone bracelet with Feng Shui symbols — designed to invite balance, protection, and positive energy.",
+    price: 27.99,
+    category: "symbolic",
+    categoryLabel: "Symbolic & Lifestyle",
+    image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80",
+    priceId: "price_REPLACE_ME_10"
+  },
+  {
+    id: 11,
+    name: "Meditation Incense Burner Set",
+    desc: "Hand-cast ceramic lotus burner with 50 sandalwood and jasmine sticks — create your sanctuary, one breath at a time.",
+    price: 38.99,
+    category: "symbolic",
+    categoryLabel: "Symbolic & Lifestyle",
+    image: "https://images.unsplash.com/photo-1598300043800-69ca18a9a350?w=600&q=80",
+    priceId: "price_REPLACE_ME_11"
+  },
+  // ── GOOD FORTUNE ──────────────────────────────────────────
+  {
+    id: 12,
+    name: "Prosperity Citrus Basket",
+    desc: "Curated basket of oranges, tangerines, and pomelo — traditional symbols of prosperity, health, and lasting joy.",
+    price: 44.99,
+    category: "fortune",
+    categoryLabel: "Good Fortune",
+    image: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=600&q=80",
+    priceId: "price_REPLACE_ME_12"
+  },
+  {
+    id: 13,
+    name: "The Wellness Gift Hamper",
+    desc: "A lovingly curated box: jasmine tea, goji berry set, jade gua sha, botanical soap, and an incense set. The complete well-being gift.",
+    price: 74.99,
+    category: "fortune",
+    categoryLabel: "Good Fortune",
+    image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&q=80",
+    priceId: "price_REPLACE_ME_13",
+    featured: true
+  }
+];
+
+// ════════════════════════════════════════════════════════════
+// CART STATE
+// ════════════════════════════════════════════════════════════
+let cart = [];
+
+// ════════════════════════════════════════════════════════════
+// RENDER PRODUCTS
+// ════════════════════════════════════════════════════════════
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  PRODUCTS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.category = p.category;
+    card.innerHTML = `
+      ${p.featured ? '<span class="product-badge">Featured</span>' : ''}
+      <div class="product-image">
+        <img src="${p.image}" alt="${p.name}" loading="lazy">
+      </div>
+      <div class="product-info">
+        <p class="product-cat-tag">${p.categoryLabel}</p>
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-desc">${p.desc}</p>
+        <div class="product-footer">
+          <span class="product-price">$${p.price.toFixed(2)}</span>
+          <button class="add-btn" data-id="${p.id}" onclick="addToCart(${p.id}, this)">Add to Cart</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+// CATEGORY FILTER
+// ════════════════════════════════════════════════════════════
+function filterCategory(cat, tabEl) {
+  if (tabEl) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tabEl.classList.add('active');
+  } else {
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.cat === cat);
+    });
+  }
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.classList.toggle('hidden', cat !== 'all' && card.dataset.category !== cat);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+// CART FUNCTIONS
+// ════════════════════════════════════════════════════════════
+function addToCart(productId, btn) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  const existing = cart.find(i => i.id === productId);
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  updateCartState();
+  showToast(`${product.name} added to cart`);
+  btn.textContent = '✓ Added';
+  btn.classList.add('added');
+  setTimeout(() => {
+    btn.textContent = 'Add to Cart';
+    btn.classList.remove('added');
+  }, 1600);
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(i => i.id !== productId);
+  updateCartState();
+  renderCartItems();
+}
+
+function changeQty(productId, delta) {
+  const item = cart.find(i => i.id === productId);
+  if (!item) return;
+  item.quantity += delta;
+  if (item.quantity <= 0) {
+    removeFromCart(productId);
+    return;
+  }
+  updateCartState();
+  renderCartItems();
+}
+
+function updateCartState() {
+  const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const count = cart.reduce((s, i) => s + i.quantity, 0);
+
+  // Badge
+  const badge = document.getElementById('cartCount');
+  badge.textContent = count;
+  badge.classList.remove('bump');
+  void badge.offsetWidth;
+  badge.classList.add('bump');
+
+  // Total
+  document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+
+  // Shipping progress
+  const pct = Math.min(100, (total / FREE_SHIPPING_THRESHOLD) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  const labelsEl = document.getElementById('shippingLabels');
+  const msgEl = document.getElementById('shippingMsg');
+  const awayEl = document.getElementById('shippingAway');
+  const noteEl = document.getElementById('shippingNote');
+
+  if (total >= FREE_SHIPPING_THRESHOLD) {
+    labelsEl.className = 'shipping-labels earned';
+    msgEl.textContent = '🌿 Free shipping unlocked!';
+    awayEl.textContent = '';
+    noteEl.textContent = 'Free shipping applied at checkout';
+  } else {
+    labelsEl.className = 'shipping-labels';
+    msgEl.textContent = `Free shipping on orders over $${FREE_SHIPPING_THRESHOLD}`;
+    awayEl.textContent = `$${(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} away`;
+    noteEl.textContent = '';
+  }
+
+  document.getElementById('cartFooter').style.display = count > 0 ? 'block' : 'none';
+}
+
+function renderCartItems() {
+  const el = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    el.innerHTML = `
+      <div class="cart-empty">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <path d="M10 10H6M10 10L14 36H44L49 18H14" stroke="#2C2420" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="18" cy="43" r="2.5" stroke="#2C2420" stroke-width="1.2"/>
+          <circle cx="37" cy="43" r="2.5" stroke="#2C2420" stroke-width="1.2"/>
+        </svg>
+        <p>Your cart is empty</p>
+      </div>`;
+    return;
+  }
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.image}" alt="${item.name}">
+      <div>
+        <div class="cart-item-cat">${item.categoryLabel}</div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-row">
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+            <span class="qty-num">${item.quantity}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          </div>
+          <span class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openCart() {
+  renderCartItems();
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ════════════════════════════════════════════════════════════
+// STRIPE CHECKOUT
+// ════════════════════════════════════════════════════════════
+async function proceedToCheckout() {
+  const btn = document.getElementById('checkoutBtn');
+
+  // Guard: check for unconfigured price IDs
+  const unconfigured = cart.filter(i => i.priceId.startsWith('price_REPLACE_ME'));
+  if (unconfigured.length > 0) {
+    alert(
+      '⚙️ Checkout Setup Required\n\n' +
+      'To enable live payments:\n\n' +
+      '1. Go to Stripe Dashboard → Settings → Checkout\n' +
+      '   Enable "Allow client-only integration"\n\n' +
+      '2. Go to Stripe Dashboard → Products\n' +
+      '   Create a Product + Price for each item\n\n' +
+      '3. Replace each "price_REPLACE_ME_XX" in the\n' +
+      '   PRODUCTS array with your real Stripe Price IDs\n\n' +
+      'Items needing IDs: ' + unconfigured.map(i => i.name).join(', ')
+    );
+    return;
+  }
+
+  btn.textContent = 'Redirecting to checkout…';
+  btn.disabled = true;
+
+  const lineItems = cart.map(item => ({
+    price: item.priceId,
+    quantity: item.quantity
+  }));
+
+  try {
+    const { error } = await stripe.redirectToCheckout({
+      lineItems,
+      mode: 'payment',
+      successUrl: SUCCESS_URL,
+      cancelUrl: CANCEL_URL,
+      shippingAddressCollection: { allowedCountries: ['US', 'CA'] },
+      billingAddressCollection: 'auto',
+    });
+    if (error) throw error;
+  } catch (err) {
+    console.error('Stripe error:', err);
+    btn.textContent = 'Proceed to Checkout';
+    btn.disabled = false;
+    alert('Something went wrong. Please try again.\n\n' + err.message);
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toast').classList.add('show');
+  toastTimer = setTimeout(() => {
+    document.getElementById('toast').classList.remove('show');
+  }, 2800);
+}
+
+// ════════════════════════════════════════════════════════════
+// NAV SCROLL EFFECT
+// ════════════════════════════════════════════════════════════
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// ════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════
+renderProducts();
+</script>
+</body>
+</html>
