@@ -577,7 +577,7 @@ footer::before {
     <li><a href="#shop" onclick="filterCategory('wellness',null)" data-i18n="nav_wellness">Wellness</a></li>
     <li><a href="#shop" onclick="filterCategory('symbolic',null)" data-i18n="nav_lifestyle">Lifestyle</a></li>
     <li><a href="#shop" onclick="filterCategory('fortune',null)" data-i18n="nav_fortune">Good Fortune</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
@@ -754,6 +754,7 @@ const T = {
     nav_wellness: 'Wellness',
     nav_lifestyle: 'Lifestyle',
     nav_fortune: 'Good Fortune',
+    nav_contact: 'Contact',
     cart_label: 'Cart',
     hero_eyebrow: 'Well-being · Love · Connection · Quality Life',
     hero_tagline: '"Gifts that touch the soul you love."',
@@ -805,6 +806,7 @@ const T = {
     nav_wellness: '养生健体',
     nav_lifestyle: '象征与生活',
     nav_fortune: '吉祥如意',
+    nav_contact: '联系我们',
     cart_label: '购物车',
     hero_eyebrow: '健康 · 爱 · 连接 · 美好生活',
     hero_tagline: '「送给你最爱的灵魂，最动心的礼物。」',
@@ -849,10 +851,11 @@ const T = {
   }
 };
 
-let currentLang = 'en';
+let currentLang = localStorage.getItem('osc_lang') || 'en';
 
 function setLanguage(lang) {
   currentLang = lang;
+  localStorage.setItem('osc_lang', lang);
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.getElementById('btnEN').classList.toggle('active', lang === 'en');
   document.getElementById('btnZH').classList.toggle('active', lang === 'zh');
@@ -1303,6 +1306,7 @@ window.addEventListener('scroll', () => {
 // ═══════════════════════════════════════════════════
 renderProducts();
 updateCartState();
+setLanguage(currentLang);
 </script>
 </body>
 </html>

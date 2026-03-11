@@ -8,874 +8,457 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #F7F2EC;
-  --warm-white: #FDFAF6;
-  --blush: #D4A5A0;
-  --terracotta: #B5624A;
-  --sage: #8A9E8C;
-  --deep: #2C2420;
-  --gold: #C9A96E;
-  --mist: #E8E0D5;
-  --shadow: rgba(44,36,32,0.1);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--cream);
-  color: var(--deep);
-  font-family: 'Jost', 'Noto Sans SC', sans-serif;
-  font-weight: 300;
-  overflow-x: hidden;
-}
-
-/* ── NAV ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(253,250,246,0.96);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--mist);
-  padding: 0 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 72px;
-  box-shadow: 0 2px 24px var(--shadow);
-}
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-}
-.nav-logo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300;
-  font-size: 1.25rem;
-  color: var(--deep);
-  line-height: 1;
-  white-space: nowrap;
-}
-.nav-logo-name em { color: var(--gold); font-style: italic; }
-.nav-links {
-  display: flex;
-  gap: 32px;
-  list-style: none;
-}
-.nav-links a {
-  text-decoration: none;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #9a8a82;
-  transition: color 0.2s;
-  font-weight: 400;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--terracotta); }
-.nav-shop-btn {
-  background: var(--deep);
-  color: var(--warm-white);
-  border: none;
-  padding: 10px 24px;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-.nav-shop-btn:hover { background: var(--terracotta); }
-
-/* ── HERO BANNER ── */
-.page-hero {
-  background: var(--deep);
-  padding: 100px 80px 80px;
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  min-height: 60vh;
-}
-.page-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 65% 55% at 5% 100%, rgba(181,98,74,0.2) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 50% at 95% 0%, rgba(138,158,140,0.13) 0%, transparent 50%);
-  pointer-events: none;
-}
-.hero-grain {
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  opacity: 0.55; pointer-events: none;
-}
-
-.hero-text { position: relative; z-index: 2; }
-.hero-eyebrow {
-  font-size: 0.58rem;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 24px;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.2s forwards;
-}
-.page-hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300;
-  font-size: clamp(3rem, 5.5vw, 5rem);
-  color: var(--warm-white);
-  line-height: 1.0;
-  letter-spacing: 0.02em;
-  margin-bottom: 28px;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.35s forwards;
-}
-.page-hero h1 em { color: var(--gold); font-style: italic; }
-.hero-divider {
-  width: 48px; height: 1px;
-  background: var(--gold);
-  margin-bottom: 28px;
-  opacity: 0;
-  animation: expandLine 1s ease 0.55s forwards;
-}
-.hero-intro {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1.18rem;
-  color: var(--blush);
-  line-height: 1.7;
-  letter-spacing: 0.03em;
-  max-width: 440px;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.65s forwards;
-}
-
-/* ── HERO IMAGE SIDE ── */
-.hero-image-wrap {
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeUp 0.9s ease 0.5s forwards;
-}
-.hero-image-frame {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-}
-.hero-image-frame img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0.75;
-  transform: scale(1.04);
-  animation: slowZoom 14s ease forwards;
-}
-.hero-image-frame::after {
-  content: '';
-  position: absolute; inset: 0;
-  border: 1px solid rgba(201,169,110,0.25);
-  pointer-events: none;
-}
-.image-caption {
-  margin-top: 14px;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(253,250,246,0.35);
-  text-align: right;
-}
-
-/* ── PNW SECTION ── */
-.pnw-section {
-  background: var(--warm-white);
-  padding: 100px 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  border-bottom: 1px solid var(--mist);
-}
-.pnw-images {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 4px;
-}
-.pnw-img-main {
-  grid-column: 1 / -1;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-}
-.pnw-img-small { aspect-ratio: 1 / 1; overflow: hidden; }
-.pnw-images img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease;
-}
-.pnw-images img:hover { transform: scale(1.04); }
-
-.pnw-text { }
-.section-label {
-  font-size: 0.58rem;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--terracotta);
-  margin-bottom: 14px;
-  font-weight: 500;
-}
-.pnw-text h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  font-size: clamp(2rem, 3.5vw, 2.9rem);
-  line-height: 1.1;
-  color: var(--deep);
-  margin-bottom: 28px;
-}
-.pnw-text h2 em { color: var(--terracotta); font-style: italic; }
-.pnw-text p {
-  font-size: 0.9rem;
-  line-height: 2.0;
-  color: #6b5e58;
-  margin-bottom: 22px;
-}
-.pnw-text p:last-child { margin-bottom: 0; }
-.pnw-quote {
-  border-left: 2px solid var(--gold);
-  padding-left: 24px;
-  margin: 32px 0;
-}
-.pnw-quote p {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1.18rem !important;
-  color: var(--deep) !important;
-  line-height: 1.65 !important;
-  margin-bottom: 0 !important;
-}
-
-/* ── CONTACT SECTION ── */
-.contact-section {
-  padding: 100px 80px;
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 80px;
-  align-items: start;
-}
-
-.contact-info { }
-.contact-info h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  font-size: clamp(2rem, 3vw, 2.8rem);
-  line-height: 1.1;
-  color: var(--deep);
-  margin-bottom: 18px;
-}
-.contact-info h2 em { color: var(--terracotta); font-style: italic; }
-.contact-intro {
-  font-size: 0.87rem;
-  line-height: 1.95;
-  color: #6b5e58;
-  margin-bottom: 52px;
-  max-width: 400px;
-}
-
-.contact-cards { display: flex; flex-direction: column; gap: 3px; }
-.contact-card {
-  background: var(--warm-white);
-  padding: 28px 32px;
-  display: flex;
-  align-items: flex-start;
-  gap: 22px;
-  transition: background 0.2s;
-}
-.contact-card:hover { background: white; }
-.contact-card-icon {
-  width: 40px; height: 40px;
-  border: 1px solid var(--mist);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 2px;
-  transition: border-color 0.2s, background 0.2s;
-}
-.contact-card:hover .contact-card-icon { border-color: var(--gold); background: rgba(201,169,110,0.06); }
-.contact-card-body { }
-.contact-card-label {
-  font-size: 0.55rem;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: var(--sage);
-  margin-bottom: 7px;
-  font-weight: 500;
-}
-.contact-card-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: var(--deep);
-  line-height: 1.4;
-}
-.contact-card-value a {
-  color: var(--deep);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.contact-card-value a:hover { color: var(--terracotta); }
-.contact-card-sub {
-  font-size: 0.72rem;
-  color: #9a8a82;
-  margin-top: 5px;
-  line-height: 1.6;
-}
-
-/* ── HOURS STRIP ── */
-.hours-strip {
-  margin-top: 3px;
-  background: var(--deep);
-  padding: 28px 32px;
-}
-.hours-strip-label {
-  font-size: 0.55rem;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-  font-weight: 500;
-}
-.hours-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 32px;
-}
-.hours-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 0.78rem;
-  color: rgba(253,250,246,0.6);
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.hours-day { font-weight: 400; letter-spacing: 0.05em; }
-.hours-time { color: var(--blush); font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; }
-
-/* ── CONTACT FORM ── */
-.contact-form-wrap {
-  background: var(--warm-white);
-  padding: 52px 52px 56px;
-  position: relative;
-}
-.contact-form-wrap::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
-}
-.form-heading {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  font-size: 1.9rem;
-  color: var(--deep);
-  margin-bottom: 8px;
-}
-.form-heading em { color: var(--gold); font-style: italic; }
-.form-subheading {
-  font-size: 0.78rem;
-  color: #9a8a82;
-  line-height: 1.7;
-  margin-bottom: 40px;
-  letter-spacing: 0.04em;
-}
-
-.form-row { margin-bottom: 22px; }
-.form-row.split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.form-label {
-  display: block;
-  font-size: 0.58rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: #9a8a82;
-  margin-bottom: 9px;
-  font-weight: 500;
-}
-.form-input, .form-select, .form-textarea {
-  width: 100%;
-  background: var(--cream);
-  border: 1px solid var(--mist);
-  padding: 13px 16px;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.84rem;
-  font-weight: 300;
-  color: var(--deep);
-  outline: none;
-  transition: border-color 0.2s, background 0.2s;
-  appearance: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-}
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--gold);
-  background: var(--warm-white);
-}
-.form-input::placeholder, .form-textarea::placeholder { color: #c0b4ae; }
-.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%239a8a82' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
-.form-select option { background: white; }
-.form-textarea { height: 130px; resize: vertical; }
-
-.form-submit {
-  width: 100%;
-  padding: 16px;
-  background: var(--deep);
-  color: var(--warm-white);
-  border: none;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-weight: 400;
-  margin-top: 6px;
-  transition: background 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-.form-submit:hover { background: var(--terracotta); }
-
-.form-success {
-  display: none;
-  text-align: center;
-  padding: 40px 20px;
-}
-.form-success.show { display: block; }
-.success-check {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: rgba(138,158,140,0.12);
-  border: 1px solid rgba(138,158,140,0.35);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px;
-}
-.form-success h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.7rem; font-weight: 400;
-  color: var(--deep); margin-bottom: 12px;
-}
-.form-success p {
-  font-size: 0.82rem; color: #9a8a82; line-height: 1.8;
-}
-
-/* ── MAP PLACEHOLDER ── */
-.map-section {
-  background: var(--mist);
-  position: relative;
-  overflow: hidden;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.map-section img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0.55;
-  position: absolute; inset: 0;
-}
-.map-overlay {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  background: rgba(253,250,246,0.9);
-  padding: 36px 52px;
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--mist);
-  max-width: 480px;
-}
-.map-overlay-label {
-  font-size: 0.56rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--terracotta);
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-.map-overlay h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  font-size: 1.55rem;
-  color: var(--deep);
-  margin-bottom: 10px;
-}
-.map-overlay p {
-  font-size: 0.8rem;
-  color: #9a8a82;
-  line-height: 1.7;
-}
-.map-cta {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 26px;
-  background: var(--deep);
-  color: var(--warm-white);
-  font-size: 0.62rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.map-cta:hover { background: var(--terracotta); }
-
-/* ── FOOTER ── */
-footer {
-  background: var(--deep);
-  padding: 80px 80px 40px;
-  position: relative; overflow: hidden;
-}
-footer::before {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
-}
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 64px; margin-bottom: 64px; }
-.footer-brand-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300; font-size: 1.6rem;
-  color: var(--warm-white); margin-bottom: 18px; display: block;
-}
-.footer-brand-name em { color: var(--gold); font-style: italic; }
-.footer-desc { font-size: 0.78rem; line-height: 1.9; color: rgba(253,250,246,0.45); max-width: 300px; }
-.footer-col h4 {
-  font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 22px; font-weight: 500;
-}
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-.footer-col a {
-  font-size: 0.78rem; color: rgba(253,250,246,0.45);
-  text-decoration: none; transition: color 0.2s; letter-spacing: 0.04em;
-}
-.footer-col a:hover { color: var(--blush); }
-.footer-bottom {
-  padding-top: 32px; border-top: 1px solid rgba(253,250,246,0.08);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.62rem; letter-spacing: 0.12em;
-  color: rgba(253,250,246,0.3); text-transform: uppercase;
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes expandLine { from { opacity: 0; width: 0; } to { opacity: 1; width: 48px; } }
-@keyframes slowZoom { from { transform: scale(1.04); } to { transform: scale(1.0); } }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1000px) {
-  nav { padding: 0 32px; }
-  .nav-links { display: none; }
-  .page-hero { grid-template-columns: 1fr; padding: 80px 40px 60px; gap: 48px; min-height: auto; }
-  .hero-image-wrap { display: none; }
-  .pnw-section { grid-template-columns: 1fr; padding: 72px 40px; gap: 48px; }
-  .contact-section { grid-template-columns: 1fr; padding: 72px 40px; gap: 56px; }
-  footer { padding: 60px 40px 36px; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-}
-@media (max-width: 640px) {
-  nav { padding: 0 20px; height: 64px; }
-  .page-hero { padding: 64px 24px 56px; }
-  .pnw-section { padding: 56px 24px; }
-  .contact-section { padding: 56px 24px; }
-  .contact-form-wrap { padding: 36px 28px 40px; }
-  .form-row.split { grid-template-columns: 1fr; }
-  footer { padding: 52px 24px 32px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
-  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
-  .map-overlay { padding: 28px 32px; }
-}
+  --cream: #F7F2EC; --warm-white: #FDFAF6; --blush: #D4A5A0;
+  --terracotta: #B5624A; --sage: #8A9E8C; --deep: #2C2420;
+  --gold: #C9A96E; --mist: #E8E0D5; --shadow: rgba(44,36,32,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--cream); color:var(--deep); font-family:'Jost','Noto Sans SC',sans-serif; font-weight:300; overflow-x:hidden; }
+nav { position:sticky; top:0; z-index:100; background:rgba(253,250,246,0.96); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid var(--mist); padding:0 64px; display:flex; align-items:center; justify-content:space-between; height:72px; box-shadow:0 2px 24px var(--shadow); }
+.nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
+.nav-logo-name { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1.25rem; color:var(--deep); line-height:1; white-space:nowrap; }
+.nav-logo-name em { color:var(--gold); font-style:italic; }
+.nav-links { display:flex; gap:32px; list-style:none; }
+.nav-links a { text-decoration:none; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:#9a8a82; transition:color 0.2s; font-weight:400; }
+.nav-links a:hover, .nav-links a.active { color:var(--terracotta); }
+.nav-right { display:flex; align-items:center; gap:14px; flex-shrink:0; }
+.lang-toggle { display:flex; border:1px solid var(--mist); overflow:hidden; }
+.lang-btn { background:none; border:none; padding:7px 13px; font-family:'Jost','Noto Sans SC',sans-serif; font-size:0.65rem; letter-spacing:0.1em; cursor:pointer; color:#9a8a82; transition:all 0.2s; font-weight:400; line-height:1; }
+.lang-btn.active { background:var(--deep); color:var(--warm-white); }
+.lang-btn:not(.active):hover { background:var(--mist); color:var(--deep); }
+.nav-shop-btn { background:var(--deep); color:var(--warm-white); border:none; padding:10px 24px; font-family:'Jost',sans-serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:background 0.2s; }
+.nav-shop-btn:hover { background:var(--terracotta); }
+.page-hero { background:var(--deep); padding:100px 80px 80px; position:relative; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; min-height:60vh; }
+.page-hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 65% 55% at 5% 100%, rgba(181,98,74,0.2) 0%, transparent 55%), radial-gradient(ellipse 45% 50% at 95% 0%, rgba(138,158,140,0.13) 0%, transparent 50%); pointer-events:none; }
+.hero-grain { position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); opacity:0.55; pointer-events:none; }
+.hero-text { position:relative; z-index:2; }
+.hero-eyebrow { font-size:0.58rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; opacity:0; animation:fadeUp 0.8s ease 0.2s forwards; }
+.page-hero h1 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(3rem,5.5vw,5rem); color:var(--warm-white); line-height:1.0; letter-spacing:0.02em; margin-bottom:28px; opacity:0; animation:fadeUp 0.8s ease 0.35s forwards; }
+.page-hero h1 em { color:var(--gold); font-style:italic; }
+.hero-divider { width:48px; height:1px; background:var(--gold); margin-bottom:28px; opacity:0; animation:expandLine 1s ease 0.55s forwards; }
+.hero-intro { font-family:'Cormorant Garamond','Noto Sans SC',serif; font-style:italic; font-size:1.18rem; color:var(--blush); line-height:1.75; letter-spacing:0.03em; max-width:440px; opacity:0; animation:fadeUp 0.8s ease 0.65s forwards; }
+.hero-image-wrap { position:relative; z-index:2; opacity:0; animation:fadeUp 0.9s ease 0.5s forwards; }
+.hero-image-frame { position:relative; overflow:hidden; aspect-ratio:4/5; }
+.hero-image-frame img { width:100%; height:100%; object-fit:cover; opacity:0.75; transform:scale(1.04); animation:slowZoom 14s ease forwards; }
+.hero-image-frame::after { content:''; position:absolute; inset:0; border:1px solid rgba(201,169,110,0.25); pointer-events:none; }
+.image-caption { margin-top:14px; font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(253,250,246,0.35); text-align:right; }
+.pnw-section { background:var(--warm-white); padding:100px 80px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; border-bottom:1px solid var(--mist); }
+.pnw-images { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:4px; }
+.pnw-img-main { grid-column:1/-1; aspect-ratio:16/9; overflow:hidden; }
+.pnw-img-small { aspect-ratio:1/1; overflow:hidden; }
+.pnw-images img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.6s ease; }
+.pnw-images img:hover { transform:scale(1.04); }
+.section-label { font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--terracotta); margin-bottom:14px; font-weight:500; }
+.pnw-text h2 { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:clamp(2rem,3.5vw,2.9rem); line-height:1.1; color:var(--deep); margin-bottom:28px; }
+.pnw-text h2 em { color:var(--terracotta); font-style:italic; }
+.pnw-text p { font-size:0.9rem; line-height:2.0; color:#6b5e58; margin-bottom:22px; }
+.pnw-text p:last-child { margin-bottom:0; }
+.pnw-quote { border-left:2px solid var(--gold); padding-left:24px; margin:32px 0; }
+.pnw-quote p { font-family:'Cormorant Garamond','Noto Sans SC',serif; font-style:italic; font-size:1.18rem!important; color:var(--deep)!important; line-height:1.65!important; margin-bottom:0!important; }
+.contact-section { padding:100px 80px; display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:start; }
+.contact-info h2 { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:clamp(2rem,3vw,2.8rem); line-height:1.1; color:var(--deep); margin-bottom:18px; }
+.contact-info h2 em { color:var(--terracotta); font-style:italic; }
+.contact-intro { font-size:0.87rem; line-height:1.95; color:#6b5e58; margin-bottom:52px; max-width:400px; }
+.contact-cards { display:flex; flex-direction:column; gap:3px; }
+.contact-card { background:var(--warm-white); padding:28px 32px; display:flex; align-items:flex-start; gap:22px; transition:background 0.2s; }
+.contact-card:hover { background:white; }
+.contact-card-icon { width:40px; height:40px; border:1px solid var(--mist); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; transition:border-color 0.2s, background 0.2s; }
+.contact-card:hover .contact-card-icon { border-color:var(--gold); background:rgba(201,169,110,0.06); }
+.contact-card-label { font-size:0.55rem; letter-spacing:0.38em; text-transform:uppercase; color:var(--sage); margin-bottom:7px; font-weight:500; }
+.contact-card-value { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:400; color:var(--deep); line-height:1.4; }
+.contact-card-value a { color:var(--deep); text-decoration:none; transition:color 0.2s; }
+.contact-card-value a:hover { color:var(--terracotta); }
+.contact-card-sub { font-size:0.72rem; color:#9a8a82; margin-top:5px; line-height:1.6; }
+.hours-strip { margin-top:3px; background:var(--deep); padding:28px 32px; }
+.hours-strip-label { font-size:0.55rem; letter-spacing:0.38em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; font-weight:500; }
+.hours-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 32px; }
+.hours-row { display:flex; justify-content:space-between; align-items:baseline; font-size:0.78rem; color:rgba(253,250,246,0.6); padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.hours-day { font-weight:400; letter-spacing:0.05em; }
+.hours-time { color:var(--blush); font-family:'Cormorant Garamond',serif; font-size:0.9rem; }
+.contact-form-wrap { background:var(--warm-white); padding:52px 52px 56px; position:relative; }
+.contact-form-wrap::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(to right,var(--terracotta),var(--gold),var(--sage)); }
+.form-heading { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:1.9rem; color:var(--deep); margin-bottom:8px; }
+.form-heading em { color:var(--gold); font-style:italic; }
+.form-subheading { font-size:0.78rem; color:#9a8a82; line-height:1.7; margin-bottom:40px; letter-spacing:0.04em; }
+.form-row { margin-bottom:22px; }
+.form-row.split { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-label { display:block; font-size:0.58rem; letter-spacing:0.32em; text-transform:uppercase; color:#9a8a82; margin-bottom:9px; font-weight:500; }
+.form-input,.form-select,.form-textarea { width:100%; background:var(--cream); border:1px solid var(--mist); padding:13px 16px; font-family:'Jost','Noto Sans SC',sans-serif; font-size:0.84rem; font-weight:300; color:var(--deep); outline:none; transition:border-color 0.2s,background 0.2s; appearance:none; -webkit-appearance:none; border-radius:0; }
+.form-input:focus,.form-select:focus,.form-textarea:focus { border-color:var(--gold); background:var(--warm-white); }
+.form-input::placeholder,.form-textarea::placeholder { color:#c0b4ae; }
+.form-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%239a8a82' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
+.form-select option { background:white; }
+.form-textarea { height:130px; resize:vertical; }
+.form-submit { width:100%; padding:16px; background:var(--deep); color:var(--warm-white); border:none; font-family:'Jost','Noto Sans SC',sans-serif; font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; cursor:pointer; font-weight:400; margin-top:6px; transition:background 0.25s; display:flex; align-items:center; justify-content:center; gap:12px; }
+.form-submit:hover { background:var(--terracotta); }
+.form-success { display:none; text-align:center; padding:40px 20px; }
+.form-success.show { display:block; }
+.success-check { width:56px; height:56px; border-radius:50%; background:rgba(138,158,140,0.12); border:1px solid rgba(138,158,140,0.35); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+.form-success h3 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:400; color:var(--deep); margin-bottom:12px; }
+.form-success p { font-size:0.82rem; color:#9a8a82; line-height:1.8; }
+.map-section { background:var(--mist); position:relative; overflow:hidden; height:400px; display:flex; align-items:center; justify-content:center; }
+.map-section img { width:100%; height:100%; object-fit:cover; opacity:0.55; position:absolute; inset:0; }
+.map-overlay { position:relative; z-index:2; text-align:center; background:rgba(253,250,246,0.9); padding:36px 52px; backdrop-filter:blur(8px); border:1px solid var(--mist); max-width:480px; }
+.map-overlay-label { font-size:0.56rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--terracotta); margin-bottom:12px; font-weight:500; }
+.map-overlay h3 { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:1.55rem; color:var(--deep); margin-bottom:10px; }
+.map-overlay p { font-size:0.8rem; color:#9a8a82; line-height:1.7; }
+.map-cta { display:inline-block; margin-top:20px; padding:10px 26px; background:var(--deep); color:var(--warm-white); font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; text-decoration:none; transition:background 0.2s; }
+.map-cta:hover { background:var(--terracotta); }
+footer { background:var(--deep); padding:80px 80px 40px; position:relative; overflow:hidden; }
+footer::before { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(to right,var(--terracotta),var(--gold),var(--sage)); }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:64px; margin-bottom:64px; }
+.footer-brand-name { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1.6rem; color:var(--warm-white); margin-bottom:18px; display:block; }
+.footer-brand-name em { color:var(--gold); font-style:italic; }
+.footer-desc { font-size:0.78rem; line-height:1.9; color:rgba(253,250,246,0.45); max-width:300px; }
+.footer-col h4 { font-size:0.58rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); margin-bottom:22px; font-weight:500; }
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:11px; }
+.footer-col a { font-size:0.78rem; color:rgba(253,250,246,0.45); text-decoration:none; transition:color 0.2s; letter-spacing:0.04em; }
+.footer-col a:hover { color:var(--blush); }
+.footer-bottom { padding-top:32px; border-top:1px solid rgba(253,250,246,0.08); display:flex; justify-content:space-between; align-items:center; font-size:0.62rem; letter-spacing:0.12em; color:rgba(253,250,246,0.3); text-transform:uppercase; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);} }
+@keyframes expandLine { from{opacity:0;width:0;}to{opacity:1;width:48px;} }
+@keyframes slowZoom { from{transform:scale(1.04);}to{transform:scale(1.0);} }
+@media(max-width:1000px){nav{padding:0 32px;}.nav-links{display:none;}.page-hero{grid-template-columns:1fr;padding:80px 40px 60px;gap:48px;min-height:auto;}.hero-image-wrap{display:none;}.pnw-section{grid-template-columns:1fr;padding:72px 40px;gap:48px;}.contact-section{grid-template-columns:1fr;padding:72px 40px;gap:56px;}footer{padding:60px 40px 36px;}.footer-grid{grid-template-columns:1fr 1fr;gap:40px;}}
+@media(max-width:640px){nav{padding:0 20px;height:64px;}.page-hero{padding:64px 24px 56px;}.pnw-section{padding:56px 24px;}.contact-section{padding:56px 24px;}.contact-form-wrap{padding:36px 28px 40px;}.form-row.split{grid-template-columns:1fr;}footer{padding:52px 24px 32px;}.footer-grid{grid-template-columns:1fr;gap:36px;}.footer-bottom{flex-direction:column;gap:10px;text-align:center;}.map-overlay{padding:28px 32px;}.nav-right{gap:8px;}.nav-shop-btn{padding:10px 16px;}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
       <circle cx="20" cy="20" r="18.5" stroke="#C9A96E" stroke-width="0.6" opacity="0.35"/>
-      <path d="M20 8 C20 8, 30 14.5, 30 22 C30 27.8 25.5 31.5 20 34 C14.5 31.5 10 27.8 10 22 C10 14.5 20 8 20 8Z" fill="none" stroke="#C9A96E" stroke-width="1.1"/>
+      <path d="M20 8 C20 8,30 14.5,30 22 C30 27.8 25.5 31.5 20 34 C14.5 31.5 10 27.8 10 22 C10 14.5 20 8 20 8Z" fill="none" stroke="#C9A96E" stroke-width="1.1"/>
       <circle cx="20" cy="22" r="3.2" fill="#B5624A" opacity="0.9"/>
       <circle cx="20" cy="22" r="1.3" fill="#C9A96E"/>
     </svg>
     <span class="nav-logo-name">One <em>Soul</em> Collective</span>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#shop">Shop All</a></li>
-    <li><a href="index.html#shop">TCM & Herbal</a></li>
-    <li><a href="index.html#shop">Wellness</a></li>
-    <li><a href="index.html#shop">Lifestyle</a></li>
-    <li><a href="contact.html" class="active">Contact</a></li>
+    <li><a href="index.html#shop" data-i18n="nav_all">Shop All</a></li>
+    <li><a href="index.html#shop" data-i18n="nav_tcm">TCM & Herbal</a></li>
+    <li><a href="index.html#shop" data-i18n="nav_wellness">Wellness</a></li>
+    <li><a href="index.html#shop" data-i18n="nav_lifestyle">Lifestyle</a></li>
+    <li><a href="contact.html" class="active" data-i18n="nav_contact">Contact</a></li>
   </ul>
-  <a href="index.html" class="nav-shop-btn">Shop Now</a>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn" id="btnEN" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" id="btnZH" onclick="setLanguage('zh')">中文</button>
+    </div>
+    <a href="index.html" class="nav-shop-btn" data-i18n="nav_shop_now">Shop Now</a>
+  </div>
 </nav>
 
-<!-- HERO BANNER -->
 <div class="page-hero">
   <div class="hero-grain"></div>
   <div class="hero-text">
-    <p class="hero-eyebrow">Eugene, Oregon · Pacific Northwest</p>
-    <h1>Come <em>Find</em><br>Our Soul</h1>
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">Eugene, Oregon · Pacific Northwest</p>
+    <h1 data-i18n="hero_h1">Come <em>Find</em><br>Our Soul</h1>
     <div class="hero-divider"></div>
-    <p class="hero-intro">
-      Nestled in the heart of the Willamette Valley, where the mountains meet the mist
-      and the rivers run clear, we are here — ready to welcome you.
-    </p>
+    <p class="hero-intro" data-i18n="hero_intro">Nestled in the heart of the Willamette Valley, where the mountains meet the mist and the rivers run clear, we are here — ready to welcome you.</p>
   </div>
   <div class="hero-image-wrap">
     <div class="hero-image-frame">
       <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80" alt="Pacific Northwest forest">
     </div>
-    <p class="image-caption">Willamette Valley · Oregon</p>
+    <p class="image-caption" data-i18n="hero_caption">Willamette Valley · Oregon</p>
   </div>
 </div>
 
-<!-- PACIFIC NORTHWEST SECTION -->
 <div class="pnw-section">
   <div class="pnw-images">
-    <div class="pnw-img-main">
-      <img src="https://images.unsplash.com/photo-1469521669194-babb45599def?w=900&q=80" alt="Eugene Oregon mountains">
-    </div>
-    <div class="pnw-img-small">
-      <img src="https://images.unsplash.com/photo-1542401886-65d6c61db217?w=500&q=80" alt="Oregon forest path">
-    </div>
-    <div class="pnw-img-small">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" alt="Pacific Northwest mist">
-    </div>
+    <div class="pnw-img-main"><img src="https://images.unsplash.com/photo-1469521669194-babb45599def?w=900&q=80" alt="Eugene Oregon mountains"></div>
+    <div class="pnw-img-small"><img src="https://images.unsplash.com/photo-1542401886-65d6c61db217?w=500&q=80" alt="Oregon forest path"></div>
+    <div class="pnw-img-small"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" alt="Pacific Northwest mist"></div>
   </div>
   <div class="pnw-text">
-    <p class="section-label">Where We Call Home</p>
-    <h2>Eugene — Where <em>Nature</em><br>Feeds the Soul</h2>
-
-    <p>
-      Eugene, Oregon is one of those rare places where the landscape itself seems designed to slow you down and remind you of what matters. Cradled by the rolling hills of the Willamette Valley, flanked by old-growth forests and threaded through by the broad, glittering McKenzie and Willamette rivers, this city has always attracted people who believe in living beautifully and intentionally.
-    </p>
-
+    <p class="section-label" data-i18n="pnw_label">Where We Call Home</p>
+    <h2 data-i18n="pnw_h2">Eugene — Where <em>Nature</em><br>Feeds the Soul</h2>
+    <p data-i18n="pnw_p1">Eugene, Oregon is one of those rare places where the landscape itself seems designed to slow you down and remind you of what matters. Cradled by the rolling hills of the Willamette Valley, flanked by old-growth forests and threaded through by the broad, glittering McKenzie and Willamette rivers, this city has always attracted people who believe in living beautifully and intentionally.</p>
     <div class="pnw-quote">
-      <p>"In the Pacific Northwest, wellness isn't a trend — it's the air you breathe, the path you walk, the way the morning light filters through Douglas fir. It's why we chose to put down roots here."</p>
+      <p data-i18n="pnw_quote">"In the Pacific Northwest, wellness isn't a trend — it's the air you breathe, the path you walk, the way the morning light filters through Douglas fir. It's why we chose to put down roots here."</p>
     </div>
-
-    <p>
-      The Pacific Northwest has a way of teaching you to pay attention — to the cedar scent after rain, to the way a valley fog rolls in and hushes everything into stillness, to the mountains that watch quietly from the east. It's a place of remarkable beauty and remarkable people: artists, healers, growers, dreamers.
-    </p>
-
-    <p>
-      One Soul Collective was born from this place and its spirit. Our store is a reflection of the Pacific Northwest's ethos — thoughtful, grounded, and deeply connected to the wisdom of the natural world. We are proud to call Eugene home, and we are even more proud to share it with you.
-    </p>
+    <p data-i18n="pnw_p2">The Pacific Northwest has a way of teaching you to pay attention — to the cedar scent after rain, to the way a valley fog rolls in and hushes everything into stillness, to the mountains that watch quietly from the east. It's a place of remarkable beauty and remarkable people: artists, healers, growers, dreamers.</p>
+    <p data-i18n="pnw_p3">One Soul Collective was born from this place and its spirit. Our store is a reflection of the Pacific Northwest's ethos — thoughtful, grounded, and deeply connected to the wisdom of the natural world. We are proud to call Eugene home, and we are even more proud to share it with you.</p>
   </div>
 </div>
 
-<!-- CONTACT SECTION -->
 <div class="contact-section">
   <div class="contact-info">
-    <p class="section-label">Get in Touch</p>
-    <h2>We'd <em>Love</em> to<br>Hear From You</h2>
-    <p class="contact-intro">
-      Whether you're searching for the perfect gift, curious about a product, or simply want to say hello — our door is always open. Stop by the store, give us a call, or send us a note. We answer every message with care.
-    </p>
-
+    <p class="section-label" data-i18n="contact_label">Get in Touch</p>
+    <h2 data-i18n="contact_h2">We'd <em>Love</em> to<br>Hear From You</h2>
+    <p class="contact-intro" data-i18n="contact_intro">Whether you're searching for the perfect gift, curious about a product, or simply want to say hello — our door is always open. Stop by the store, give us a call, or send us a note. We answer every message with care.</p>
     <div class="contact-cards">
-      <!-- Address -->
       <div class="contact-card">
         <div class="contact-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#C9A96E" stroke-width="1.3" fill="none"/>
-            <circle cx="12" cy="9" r="2.5" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#C9A96E" stroke-width="1.3" fill="none"/><circle cx="12" cy="9" r="2.5" stroke="#C9A96E" stroke-width="1.2" fill="none"/></svg>
         </div>
         <div class="contact-card-body">
-          <div class="contact-card-label">Visit Us</div>
+          <div class="contact-card-label" data-i18n="card_visit_label">Visit Us</div>
           <div class="contact-card-value">123 One Soul Street<br>Eugene, OR 97401</div>
-          <div class="contact-card-sub">Located in the heart of downtown Eugene</div>
+          <div class="contact-card-sub" data-i18n="card_visit_sub">Located in the heart of downtown Eugene</div>
         </div>
       </div>
-
-      <!-- Phone -->
       <div class="contact-card">
         <div class="contact-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27 11.36 11.36 0 003.55.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.27 1.11z" stroke="#C9A96E" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27 11.36 11.36 0 003.55.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.27 1.11z" stroke="#C9A96E" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
         </div>
         <div class="contact-card-body">
-          <div class="contact-card-label">Call Us</div>
+          <div class="contact-card-label" data-i18n="card_phone_label">Call Us</div>
           <div class="contact-card-value"><a href="tel:7777777777">777-777-7777</a></div>
-          <div class="contact-card-sub">Mon–Fri 10am–6pm · Sat 10am–5pm</div>
+          <div class="contact-card-sub" data-i18n="card_phone_sub">Mon–Fri 10am–6pm · Sat 10am–5pm</div>
         </div>
       </div>
-
-      <!-- Email -->
       <div class="contact-card">
         <div class="contact-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="4" width="20" height="16" rx="1" stroke="#C9A96E" stroke-width="1.3" fill="none"/>
-            <path d="M2 7l10 7 10-7" stroke="#C9A96E" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="1" stroke="#C9A96E" stroke-width="1.3" fill="none"/><path d="M2 7l10 7 10-7" stroke="#C9A96E" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="contact-card-body">
-          <div class="contact-card-label">Email Us</div>
+          <div class="contact-card-label" data-i18n="card_email_label">Email Us</div>
           <div class="contact-card-value"><a href="mailto:info@onesoulgifts.com">info@onesoulgifts.com</a></div>
-          <div class="contact-card-sub">We reply within one business day</div>
+          <div class="contact-card-sub" data-i18n="card_email_sub">We reply within one business day</div>
         </div>
       </div>
-
-      <!-- Hours -->
       <div class="hours-strip">
-        <div class="hours-strip-label">Store Hours</div>
+        <div class="hours-strip-label" data-i18n="hours_label">Store Hours</div>
         <div class="hours-grid">
-          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">10am – 6pm</span></div>
-          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">10am – 6pm</span></div>
-          <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">10am – 6pm</span></div>
-          <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">10am – 6pm</span></div>
-          <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">10am – 6pm</span></div>
-          <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10am – 5pm</span></div>
-          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">Closed</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_mon">Monday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_tue">Tuesday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_wed">Wednesday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_thu">Thursday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_fri">Friday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_sat">Saturday</span><span class="hours-time">10am – 5pm</span></div>
+          <div class="hours-row"><span class="hours-day" data-i18n="day_sun">Sunday</span><span class="hours-time" data-i18n="day_closed">Closed</span></div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- CONTACT FORM -->
   <div class="contact-form-wrap">
-    <h3 class="form-heading">Send Us a <em>Message</em></h3>
-    <p class="form-subheading">Questions, gift ideas, bulk orders, or simply a kind word — we'd love to hear from you.</p>
-
+    <h3 class="form-heading" data-i18n="form_heading">Send Us a <em>Message</em></h3>
+    <p class="form-subheading" data-i18n="form_subheading">Questions, gift ideas, bulk orders, or simply a kind word — we'd love to hear from you.</p>
     <form id="contactForm" onsubmit="handleSubmit(event)">
       <div class="form-row split">
         <div>
-          <label class="form-label" for="firstName">First Name</label>
-          <input class="form-input" type="text" id="firstName" name="firstName" placeholder="Your first name" required>
+          <label class="form-label" for="firstName" data-i18n="form_fname">First Name</label>
+          <input class="form-input" type="text" id="firstName" name="firstName" data-i18n-placeholder="form_fname_ph" placeholder="Your first name" required>
         </div>
         <div>
-          <label class="form-label" for="lastName">Last Name</label>
-          <input class="form-input" type="text" id="lastName" name="lastName" placeholder="Your last name" required>
+          <label class="form-label" for="lastName" data-i18n="form_lname">Last Name</label>
+          <input class="form-input" type="text" id="lastName" name="lastName" data-i18n-placeholder="form_lname_ph" placeholder="Your last name" required>
         </div>
       </div>
-
       <div class="form-row">
-        <label class="form-label" for="email">Email Address</label>
-        <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
+        <label class="form-label" for="emailField" data-i18n="form_email">Email Address</label>
+        <input class="form-input" type="email" id="emailField" name="email" placeholder="your@email.com" required>
       </div>
-
       <div class="form-row">
-        <label class="form-label" for="subject">Subject</label>
-        <select class="form-select" id="subject" name="subject">
-          <option value="">Select a topic…</option>
-          <option value="product">Product Inquiry</option>
-          <option value="order">Order Question</option>
-          <option value="gift">Gift Consultation</option>
-          <option value="wholesale">Wholesale / Bulk Orders</option>
-          <option value="visit">Visiting the Store</option>
-          <option value="other">Something Else</option>
+        <label class="form-label" for="subjectSelect" data-i18n="form_subject">Subject</label>
+        <select class="form-select" id="subjectSelect" name="subject">
+          <option value="" data-i18n="form_select_default">Select a topic…</option>
+          <option value="product" data-i18n="form_opt_product">Product Inquiry</option>
+          <option value="order" data-i18n="form_opt_order">Order Question</option>
+          <option value="gift" data-i18n="form_opt_gift">Gift Consultation</option>
+          <option value="wholesale" data-i18n="form_opt_wholesale">Wholesale / Bulk Orders</option>
+          <option value="visit" data-i18n="form_opt_visit">Visiting the Store</option>
+          <option value="other" data-i18n="form_opt_other">Something Else</option>
         </select>
       </div>
-
       <div class="form-row">
-        <label class="form-label" for="message">Your Message</label>
-        <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what's on your mind…" required></textarea>
+        <label class="form-label" for="message" data-i18n="form_message">Your Message</label>
+        <textarea class="form-textarea" id="message" name="message" data-i18n-placeholder="form_message_ph" placeholder="Tell us what's on your mind…" required></textarea>
       </div>
-
       <button type="submit" class="form-submit">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path d="M22 2L11 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M22 2L15 22 11 13 2 9l20-7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
-        Send Message
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M22 2L15 22 11 13 2 9l20-7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span data-i18n="form_submit">Send Message</span>
       </button>
     </form>
-
     <div class="form-success" id="formSuccess">
       <div class="success-check">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M5 12L10 17L19 7" stroke="#8A9E8C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12L10 17L19 7" stroke="#8A9E8C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <h3>Message Sent</h3>
-      <p>Thank you for reaching out. We'll be in touch within one business day.<br><br>
-      <em style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--blush)">"Every connection begins with a single kind word."</em></p>
+      <h3 data-i18n="form_success_title">Message Sent</h3>
+      <p data-i18n="form_success_body">Thank you for reaching out. We'll be in touch within one business day.<br><br><em style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--blush)">"Every connection begins with a single kind word."</em></p>
     </div>
   </div>
 </div>
 
-<!-- MAP SECTION -->
 <div class="map-section">
   <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80" alt="Oregon landscape">
   <div class="map-overlay">
-    <p class="map-overlay-label">Find Us</p>
+    <p class="map-overlay-label" data-i18n="map_label">Find Us</p>
     <h3>One Soul Collective</h3>
-    <p>123 One Soul Street · Eugene, OR 97401<br>In the heart of downtown, near the Willamette River</p>
-    <a href="https://maps.google.com/?q=Eugene+OR" target="_blank" class="map-cta">Open in Google Maps</a>
+    <p data-i18n="map_address">123 One Soul Street · Eugene, OR 97401<br>In the heart of downtown, near the Willamette River</p>
+    <a href="https://maps.google.com/?q=Eugene+OR" target="_blank" class="map-cta" data-i18n="map_cta">Open in Google Maps</a>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
       <span class="footer-brand-name">One <em>Soul</em> Collective</span>
-      <p class="footer-desc">Curated wellness gifts rooted in the wisdom of traditional Chinese practice — for energy, balance, and the beauty of living well. Every item chosen with love, for the people who matter most.</p>
+      <p class="footer-desc" data-i18n="footer_desc">Curated wellness gifts rooted in the wisdom of traditional Chinese practice — for energy, balance, and the beauty of living well. Every item chosen with love, for the people who matter most.</p>
     </div>
     <div class="footer-col">
-      <h4>Collections</h4>
+      <h4 data-i18n="footer_collections">Collections</h4>
       <ul>
-        <li><a href="index.html#shop">TCM & Herbal</a></li>
-        <li><a href="index.html#shop">Physical Wellness</a></li>
-        <li><a href="index.html#shop">Symbolic & Lifestyle</a></li>
-        <li><a href="index.html#shop">Good Fortune</a></li>
+        <li><a href="index.html#shop" data-i18n="cat_tcm">TCM & Herbal</a></li>
+        <li><a href="index.html#shop" data-i18n="cat_wellness">Physical Wellness</a></li>
+        <li><a href="index.html#shop" data-i18n="cat_symbolic">Symbolic & Lifestyle</a></li>
+        <li><a href="index.html#shop" data-i18n="cat_fortune">Good Fortune</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Information</h4>
+      <h4 data-i18n="footer_info">Information</h4>
       <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Shipping & Returns</a></li>
-        <li><a href="#">Gift Wrapping</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#" data-i18n="footer_about">About Us</a></li>
+        <li><a href="#" data-i18n="footer_shipping">Shipping & Returns</a></li>
+        <li><a href="#" data-i18n="footer_gift">Gift Wrapping</a></li>
+        <li><a href="#" data-i18n="footer_faq">FAQ</a></li>
+        <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 One Soul Collective · All rights reserved</span>
-    <span>Gifts that touch the soul you love.</span>
+    <span data-i18n="footer_copy">© 2025 One Soul Collective · All rights reserved</span>
+    <span data-i18n="footer_tagline">Gifts that touch the soul you love.</span>
   </div>
 </footer>
 
 <script>
+const T = {
+  en: {
+    nav_all:'Shop All', nav_tcm:'TCM & Herbal', nav_wellness:'Wellness',
+    nav_lifestyle:'Lifestyle', nav_contact:'Contact', nav_shop_now:'Shop Now',
+    hero_eyebrow:'Eugene, Oregon · Pacific Northwest',
+    hero_h1:'Come <em>Find</em><br>Our Soul',
+    hero_intro:'Nestled in the heart of the Willamette Valley, where the mountains meet the mist and the rivers run clear, we are here — ready to welcome you.',
+    hero_caption:'Willamette Valley · Oregon',
+    pnw_label:'Where We Call Home',
+    pnw_h2:'Eugene — Where <em>Nature</em><br>Feeds the Soul',
+    pnw_p1:'Eugene, Oregon is one of those rare places where the landscape itself seems designed to slow you down and remind you of what matters. Cradled by the rolling hills of the Willamette Valley, flanked by old-growth forests and threaded through by the broad, glittering McKenzie and Willamette rivers, this city has always attracted people who believe in living beautifully and intentionally.',
+    pnw_quote:'"In the Pacific Northwest, wellness isn\'t a trend — it\'s the air you breathe, the path you walk, the way the morning light filters through Douglas fir. It\'s why we chose to put down roots here."',
+    pnw_p2:'The Pacific Northwest has a way of teaching you to pay attention — to the cedar scent after rain, to the way a valley fog rolls in and hushes everything into stillness, to the mountains that watch quietly from the east. It\'s a place of remarkable beauty and remarkable people: artists, healers, growers, dreamers.',
+    pnw_p3:'One Soul Collective was born from this place and its spirit. Our store is a reflection of the Pacific Northwest\'s ethos — thoughtful, grounded, and deeply connected to the wisdom of the natural world. We are proud to call Eugene home, and we are even more proud to share it with you.',
+    contact_label:'Get in Touch',
+    contact_h2:'We\'d <em>Love</em> to<br>Hear From You',
+    contact_intro:'Whether you\'re searching for the perfect gift, curious about a product, or simply want to say hello — our door is always open. Stop by the store, give us a call, or send us a note. We answer every message with care.',
+    card_visit_label:'Visit Us', card_visit_sub:'Located in the heart of downtown Eugene',
+    card_phone_label:'Call Us', card_phone_sub:'Mon–Fri 10am–6pm · Sat 10am–5pm',
+    card_email_label:'Email Us', card_email_sub:'We reply within one business day',
+    hours_label:'Store Hours',
+    day_mon:'Monday', day_tue:'Tuesday', day_wed:'Wednesday',
+    day_thu:'Thursday', day_fri:'Friday', day_sat:'Saturday',
+    day_sun:'Sunday', day_closed:'Closed',
+    form_heading:'Send Us a <em>Message</em>',
+    form_subheading:'Questions, gift ideas, bulk orders, or simply a kind word — we\'d love to hear from you.',
+    form_fname:'First Name', form_fname_ph:'Your first name',
+    form_lname:'Last Name', form_lname_ph:'Your last name',
+    form_email:'Email Address', form_subject:'Subject',
+    form_select_default:'Select a topic…',
+    form_opt_product:'Product Inquiry', form_opt_order:'Order Question',
+    form_opt_gift:'Gift Consultation', form_opt_wholesale:'Wholesale / Bulk Orders',
+    form_opt_visit:'Visiting the Store', form_opt_other:'Something Else',
+    form_message:'Your Message', form_message_ph:'Tell us what\'s on your mind…',
+    form_submit:'Send Message',
+    form_success_title:'Message Sent',
+    form_success_body:'Thank you for reaching out. We\'ll be in touch within one business day.<br><br><em style="font-family:\'Cormorant Garamond\',serif;font-size:1rem;color:var(--blush)">"Every connection begins with a single kind word."</em>',
+    map_label:'Find Us',
+    map_address:'123 One Soul Street · Eugene, OR 97401<br>In the heart of downtown, near the Willamette River',
+    map_cta:'Open in Google Maps',
+    cat_tcm:'TCM & Herbal', cat_wellness:'Physical Wellness',
+    cat_symbolic:'Symbolic & Lifestyle', cat_fortune:'Good Fortune',
+    footer_desc:'Curated wellness gifts rooted in the wisdom of traditional Chinese practice — for energy, balance, and the beauty of living well. Every item chosen with love, for the people who matter most.',
+    footer_collections:'Collections', footer_info:'Information',
+    footer_about:'About Us', footer_shipping:'Shipping & Returns',
+    footer_gift:'Gift Wrapping', footer_faq:'FAQ',
+    footer_copy:'© 2025 One Soul Collective · All rights reserved',
+    footer_tagline:'Gifts that touch the soul you love.',
+  },
+  zh: {
+    nav_all:'全部商品', nav_tcm:'中医草本', nav_wellness:'养生健体',
+    nav_lifestyle:'象征与生活', nav_contact:'联系我们', nav_shop_now:'立即购物',
+    hero_eyebrow:'俄勒冈州尤金市 · 太平洋西北',
+    hero_h1:'来<em>寻找</em><br>我们的灵魂',
+    hero_intro:'坐落在威拉米特河谷的心脏地带，群山与雾气交汇，河流清澈流淌——我们就在这里，随时欢迎您的到来。',
+    hero_caption:'威拉米特河谷 · 俄勒冈州',
+    pnw_label:'我们称之为家的地方',
+    pnw_h2:'尤金——<em>自然</em>滋养<br>灵魂之地',
+    pnw_p1:'俄勒冈州尤金市是那种罕见的地方——这里的山水仿佛专为让人放慢脚步、回归本真而生。威拉米特河谷的丘陵如臂弯拥抱着这座城市，古老的原始森林为她遮荫，宽广闪亮的麦肯锡河与威拉米特河穿城而过。这里自古以来便吸引着那些相信生活应当美丽而有意义的人。',
+    pnw_quote:'「在太平洋西北，养生不是一种潮流——它是你呼吸的空气，是你踏过的小径，是清晨阳光穿透道格拉斯冷杉的方式。这就是我们选择在此扎根的原因。」',
+    pnw_p2:'太平洋西北有一种让人学会专注的力量——雨后雪松的气息、晨雾漫过山谷归于寂静的方式、东方群山沉默守望的姿态。这里有非凡的美景，也有非凡的人：艺术家、疗愈者、耕耘者、追梦人。',
+    pnw_p3:'One Soul Collective 诞生于这片土地与她的精神之中。我们的店铺是太平洋西北精神的体现——深思熟虑、脚踏实地，与自然世界的智慧深深相连。我们为尤金是我们的家而自豪，更为能与您分享这份美好而骄傲。',
+    contact_label:'与我们联系',
+    contact_h2:'我们<em>期待</em><br>听到您的声音',
+    contact_intro:'无论您是在寻找完美的礼物、对某件商品心存好奇，还是只想打个招呼——我们的大门永远为您敞开。欢迎莅临门店、拨打电话，或发送邮件。每一条留言，我们都用心回复。',
+    card_visit_label:'来访地址', card_visit_sub:'位于尤金市中心核心地带',
+    card_phone_label:'致电我们', card_phone_sub:'周一至周五 上午10时–下午6时 · 周六 上午10时–下午5时',
+    card_email_label:'发送邮件', card_email_sub:'我们将在一个工作日内回复',
+    hours_label:'营业时间',
+    day_mon:'周一', day_tue:'周二', day_wed:'周三',
+    day_thu:'周四', day_fri:'周五', day_sat:'周六',
+    day_sun:'周日', day_closed:'休息',
+    form_heading:'给我们<em>留言</em>',
+    form_subheading:'产品咨询、礼品建议、批量订购，或仅仅是一句温暖的问候——我们都期待收到您的来信。',
+    form_fname:'名字', form_fname_ph:'请输入您的名字',
+    form_lname:'姓氏', form_lname_ph:'请输入您的姓氏',
+    form_email:'电子邮箱', form_subject:'主题',
+    form_select_default:'请选择咨询类型…',
+    form_opt_product:'商品咨询', form_opt_order:'订单问题',
+    form_opt_gift:'礼品顾问', form_opt_wholesale:'批发 / 批量订购',
+    form_opt_visit:'计划到访门店', form_opt_other:'其他事项',
+    form_message:'留言内容', form_message_ph:'请告诉我们您想说的话…',
+    form_submit:'发送留言',
+    form_success_title:'留言已发送',
+    form_success_body:'感谢您的联系，我们将在一个工作日内与您取得联系。<br><br><em style="font-family:\'Noto Sans SC\',sans-serif;font-size:0.9rem;color:var(--blush)">「每一段连结，都始于一句温柔的问候。」</em>',
+    map_label:'找到我们',
+    map_address:'123 One Soul Street · Eugene, OR 97401<br>市中心核心地带，威拉米特河畔',
+    map_cta:'在谷歌地图中打开',
+    cat_tcm:'中医草本', cat_wellness:'养生健体',
+    cat_symbolic:'象征与生活', cat_fortune:'吉祥如意',
+    footer_desc:'以传统中医智慧为根基，为您精选养生礼品——滋补能量、平衡身心、享受美好生活。每一件商品，都满载爱意，献给您最珍视的人。',
+    footer_collections:'商品系列', footer_info:'服务信息',
+    footer_about:'关于我们', footer_shipping:'运费与退换',
+    footer_gift:'礼品包装', footer_faq:'常见问题',
+    footer_copy:'© 2025 One Soul Collective · 版权所有',
+    footer_tagline:'送给你最爱的灵魂，最动心的礼物。',
+  }
+};
+
+let currentLang = localStorage.getItem('osc_lang') || 'en';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('osc_lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('btnZH').classList.toggle('active', lang === 'zh');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (T[lang][key] !== undefined) el.placeholder = T[lang][key];
+  });
+  document.querySelectorAll('select option[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+  });
+}
+
 function handleSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('contactForm');
   const success = document.getElementById('formSuccess');
-
-  // Animate form out
   form.style.transition = 'opacity 0.3s, transform 0.3s';
   form.style.opacity = '0';
   form.style.transform = 'translateY(-10px)';
-  setTimeout(() => {
-    form.style.display = 'none';
-    success.classList.add('show');
-    success.style.animation = 'fadeUp 0.6s ease forwards';
-  }, 300);
+  setTimeout(() => { form.style.display = 'none'; success.classList.add('show'); }, 300);
 }
+
+setLanguage(currentLang);
 </script>
 </body>
 </html>
