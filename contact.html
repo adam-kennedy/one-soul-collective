@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — One Soul Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F7F2EC;
+  --warm-white: #FDFAF6;
+  --blush: #D4A5A0;
+  --terracotta: #B5624A;
+  --sage: #8A9E8C;
+  --deep: #2C2420;
+  --gold: #C9A96E;
+  --mist: #E8E0D5;
+  --shadow: rgba(44,36,32,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--deep);
+  font-family: 'Jost', 'Noto Sans SC', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(253,250,246,0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--mist);
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  box-shadow: 0 2px 24px var(--shadow);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+.nav-logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: var(--deep);
+  line-height: 1;
+  white-space: nowrap;
+}
+.nav-logo-name em { color: var(--gold); font-style: italic; }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a8a82;
+  transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--terracotta); }
+.nav-shop-btn {
+  background: var(--deep);
+  color: var(--warm-white);
+  border: none;
+  padding: 10px 24px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.nav-shop-btn:hover { background: var(--terracotta); }
+
+/* ── HERO BANNER ── */
+.page-hero {
+  background: var(--deep);
+  padding: 100px 80px 80px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  min-height: 60vh;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 5% 100%, rgba(181,98,74,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 50% at 95% 0%, rgba(138,158,140,0.13) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.55; pointer-events: none;
+}
+
+.hero-text { position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-size: 0.58rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s forwards;
+}
+.page-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  color: var(--warm-white);
+  line-height: 1.0;
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.35s forwards;
+}
+.page-hero h1 em { color: var(--gold); font-style: italic; }
+.hero-divider {
+  width: 48px; height: 1px;
+  background: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: expandLine 1s ease 0.55s forwards;
+}
+.hero-intro {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.18rem;
+  color: var(--blush);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  max-width: 440px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.65s forwards;
+}
+
+/* ── HERO IMAGE SIDE ── */
+.hero-image-wrap {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.5s forwards;
+}
+.hero-image-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+.hero-image-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.75;
+  transform: scale(1.04);
+  animation: slowZoom 14s ease forwards;
+}
+.hero-image-frame::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(201,169,110,0.25);
+  pointer-events: none;
+}
+.image-caption {
+  margin-top: 14px;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(253,250,246,0.35);
+  text-align: right;
+}
+
+/* ── PNW SECTION ── */
+.pnw-section {
+  background: var(--warm-white);
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  border-bottom: 1px solid var(--mist);
+}
+.pnw-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 4px;
+}
+.pnw-img-main {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.pnw-img-small { aspect-ratio: 1 / 1; overflow: hidden; }
+.pnw-images img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.pnw-images img:hover { transform: scale(1.04); }
+
+.pnw-text { }
+.section-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+.pnw-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 3.5vw, 2.9rem);
+  line-height: 1.1;
+  color: var(--deep);
+  margin-bottom: 28px;
+}
+.pnw-text h2 em { color: var(--terracotta); font-style: italic; }
+.pnw-text p {
+  font-size: 0.9rem;
+  line-height: 2.0;
+  color: #6b5e58;
+  margin-bottom: 22px;
+}
+.pnw-text p:last-child { margin-bottom: 0; }
+.pnw-quote {
+  border-left: 2px solid var(--gold);
+  padding-left: 24px;
+  margin: 32px 0;
+}
+.pnw-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.18rem !important;
+  color: var(--deep) !important;
+  line-height: 1.65 !important;
+  margin-bottom: 0 !important;
+}
+
+/* ── CONTACT SECTION ── */
+.contact-section {
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-info { }
+.contact-info h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 1.1;
+  color: var(--deep);
+  margin-bottom: 18px;
+}
+.contact-info h2 em { color: var(--terracotta); font-style: italic; }
+.contact-intro {
+  font-size: 0.87rem;
+  line-height: 1.95;
+  color: #6b5e58;
+  margin-bottom: 52px;
+  max-width: 400px;
+}
+
+.contact-cards { display: flex; flex-direction: column; gap: 3px; }
+.contact-card {
+  background: var(--warm-white);
+  padding: 28px 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  transition: background 0.2s;
+}
+.contact-card:hover { background: white; }
+.contact-card-icon {
+  width: 40px; height: 40px;
+  border: 1px solid var(--mist);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.contact-card:hover .contact-card-icon { border-color: var(--gold); background: rgba(201,169,110,0.06); }
+.contact-card-body { }
+.contact-card-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 7px;
+  font-weight: 500;
+}
+.contact-card-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--deep);
+  line-height: 1.4;
+}
+.contact-card-value a {
+  color: var(--deep);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-card-value a:hover { color: var(--terracotta); }
+.contact-card-sub {
+  font-size: 0.72rem;
+  color: #9a8a82;
+  margin-top: 5px;
+  line-height: 1.6;
+}
+
+/* ── HOURS STRIP ── */
+.hours-strip {
+  margin-top: 3px;
+  background: var(--deep);
+  padding: 28px 32px;
+}
+.hours-strip-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.hours-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+}
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.78rem;
+  color: rgba(253,250,246,0.6);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.hours-day { font-weight: 400; letter-spacing: 0.05em; }
+.hours-time { color: var(--blush); font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; }
+
+/* ── CONTACT FORM ── */
+.contact-form-wrap {
+  background: var(--warm-white);
+  padding: 52px 52px 56px;
+  position: relative;
+}
+.contact-form-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
+}
+.form-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 1.9rem;
+  color: var(--deep);
+  margin-bottom: 8px;
+}
+.form-heading em { color: var(--gold); font-style: italic; }
+.form-subheading {
+  font-size: 0.78rem;
+  color: #9a8a82;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  letter-spacing: 0.04em;
+}
+
+.form-row { margin-bottom: 22px; }
+.form-row.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-label {
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #9a8a82;
+  margin-bottom: 9px;
+  font-weight: 500;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--mist);
+  padding: 13px 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 300;
+  color: var(--deep);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+  background: var(--warm-white);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: #c0b4ae; }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%239a8a82' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+.form-select option { background: white; }
+.form-textarea { height: 130px; resize: vertical; }
+
+.form-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--deep);
+  color: var(--warm-white);
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 400;
+  margin-top: 6px;
+  transition: background 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.form-submit:hover { background: var(--terracotta); }
+
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+.form-success.show { display: block; }
+.success-check {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(138,158,140,0.12);
+  border: 1px solid rgba(138,158,140,0.35);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.form-success h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 400;
+  color: var(--deep); margin-bottom: 12px;
+}
+.form-success p {
+  font-size: 0.82rem; color: #9a8a82; line-height: 1.8;
+}
+
+/* ── MAP PLACEHOLDER ── */
+.map-section {
+  background: var(--mist);
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-section img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  position: absolute; inset: 0;
+}
+.map-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  background: rgba(253,250,246,0.9);
+  padding: 36px 52px;
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--mist);
+  max-width: 480px;
+}
+.map-overlay-label {
+  font-size: 0.56rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.map-overlay h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 1.55rem;
+  color: var(--deep);
+  margin-bottom: 10px;
+}
+.map-overlay p {
+  font-size: 0.8rem;
+  color: #9a8a82;
+  line-height: 1.7;
+}
+.map-cta {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 26px;
+  background: var(--deep);
+  color: var(--warm-white);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.map-cta:hover { background: var(--terracotta); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--deep);
+  padding: 80px 80px 40px;
+  position: relative; overflow: hidden;
+}
+footer::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 64px; margin-bottom: 64px; }
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 1.6rem;
+  color: var(--warm-white); margin-bottom: 18px; display: block;
+}
+.footer-brand-name em { color: var(--gold); font-style: italic; }
+.footer-desc { font-size: 0.78rem; line-height: 1.9; color: rgba(253,250,246,0.45); max-width: 300px; }
+.footer-col h4 {
+  font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 22px; font-weight: 500;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.footer-col a {
+  font-size: 0.78rem; color: rgba(253,250,246,0.45);
+  text-decoration: none; transition: color 0.2s; letter-spacing: 0.04em;
+}
+.footer-col a:hover { color: var(--blush); }
+.footer-bottom {
+  padding-top: 32px; border-top: 1px solid rgba(253,250,246,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  color: rgba(253,250,246,0.3); text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes expandLine { from { opacity: 0; width: 0; } to { opacity: 1; width: 48px; } }
+@keyframes slowZoom { from { transform: scale(1.04); } to { transform: scale(1.0); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1000px) {
+  nav { padding: 0 32px; }
+  .nav-links { display: none; }
+  .page-hero { grid-template-columns: 1fr; padding: 80px 40px 60px; gap: 48px; min-height: auto; }
+  .hero-image-wrap { display: none; }
+  .pnw-section { grid-template-columns: 1fr; padding: 72px 40px; gap: 48px; }
+  .contact-section { grid-template-columns: 1fr; padding: 72px 40px; gap: 56px; }
+  footer { padding: 60px 40px 36px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  nav { padding: 0 20px; height: 64px; }
+  .page-hero { padding: 64px 24px 56px; }
+  .pnw-section { padding: 56px 24px; }
+  .contact-section { padding: 56px 24px; }
+  .contact-form-wrap { padding: 36px 28px 40px; }
+  .form-row.split { grid-template-columns: 1fr; }
+  footer { padding: 52px 24px 32px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .map-overlay { padding: 28px 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18.5" stroke="#C9A96E" stroke-width="0.6" opacity="0.35"/>
+      <path d="M20 8 C20 8, 30 14.5, 30 22 C30 27.8 25.5 31.5 20 34 C14.5 31.5 10 27.8 10 22 C10 14.5 20 8 20 8Z" fill="none" stroke="#C9A96E" stroke-width="1.1"/>
+      <circle cx="20" cy="22" r="3.2" fill="#B5624A" opacity="0.9"/>
+      <circle cx="20" cy="22" r="1.3" fill="#C9A96E"/>
+    </svg>
+    <span class="nav-logo-name">One <em>Soul</em> Collective</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#shop">Shop All</a></li>
+    <li><a href="index.html#shop">TCM & Herbal</a></li>
+    <li><a href="index.html#shop">Wellness</a></li>
+    <li><a href="index.html#shop">Lifestyle</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="index.html" class="nav-shop-btn">Shop Now</a>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="page-hero">
+  <div class="hero-grain"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Eugene, Oregon · Pacific Northwest</p>
+    <h1>Come <em>Find</em><br>Our Soul</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-intro">
+      Nestled in the heart of the Willamette Valley, where the mountains meet the mist
+      and the rivers run clear, we are here — ready to welcome you.
+    </p>
+  </div>
+  <div class="hero-image-wrap">
+    <div class="hero-image-frame">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80" alt="Pacific Northwest forest">
+    </div>
+    <p class="image-caption">Willamette Valley · Oregon</p>
+  </div>
+</div>
+
+<!-- PACIFIC NORTHWEST SECTION -->
+<div class="pnw-section">
+  <div class="pnw-images">
+    <div class="pnw-img-main">
+      <img src="https://images.unsplash.com/photo-1469521669194-babb45599def?w=900&q=80" alt="Eugene Oregon mountains">
+    </div>
+    <div class="pnw-img-small">
+      <img src="https://images.unsplash.com/photo-1542401886-65d6c61db217?w=500&q=80" alt="Oregon forest path">
+    </div>
+    <div class="pnw-img-small">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" alt="Pacific Northwest mist">
+    </div>
+  </div>
+  <div class="pnw-text">
+    <p class="section-label">Where We Call Home</p>
+    <h2>Eugene — Where <em>Nature</em><br>Feeds the Soul</h2>
+
+    <p>
+      Eugene, Oregon is one of those rare places where the landscape itself seems designed to slow you down and remind you of what matters. Cradled by the rolling hills of the Willamette Valley, flanked by old-growth forests and threaded through by the broad, glittering McKenzie and Willamette rivers, this city has always attracted people who believe in living beautifully and intentionally.
+    </p>
+
+    <div class="pnw-quote">
+      <p>"In the Pacific Northwest, wellness isn't a trend — it's the air you breathe, the path you walk, the way the morning light filters through Douglas fir. It's why we chose to put down roots here."</p>
+    </div>
+
+    <p>
+      The Pacific Northwest has a way of teaching you to pay attention — to the cedar scent after rain, to the way a valley fog rolls in and hushes everything into stillness, to the mountains that watch quietly from the east. It's a place of remarkable beauty and remarkable people: artists, healers, growers, dreamers.
+    </p>
+
+    <p>
+      One Soul Collective was born from this place and its spirit. Our store is a reflection of the Pacific Northwest's ethos — thoughtful, grounded, and deeply connected to the wisdom of the natural world. We are proud to call Eugene home, and we are even more proud to share it with you.
+    </p>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<div class="contact-section">
+  <div class="contact-info">
+    <p class="section-label">Get in Touch</p>
+    <h2>We'd <em>Love</em> to<br>Hear From You</h2>
+    <p class="contact-intro">
+      Whether you're searching for the perfect gift, curious about a product, or simply want to say hello — our door is always open. Stop by the store, give us a call, or send us a note. We answer every message with care.
+    </p>
+
+    <div class="contact-cards">
+      <!-- Address -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#C9A96E" stroke-width="1.3" fill="none"/>
+            <circle cx="12" cy="9" r="2.5" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div class="contact-card-body">
+          <div class="contact-card-label">Visit Us</div>
+          <div class="contact-card-value">123 One Soul Street<br>Eugene, OR 97401</div>
+          <div class="contact-card-sub">Located in the heart of downtown Eugene</div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27 11.36 11.36 0 003.55.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.27 1.11z" stroke="#C9A96E" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="contact-card-body">
+          <div class="contact-card-label">Call Us</div>
+          <div class="contact-card-value"><a href="tel:7777777777">777-777-7777</a></div>
+          <div class="contact-card-sub">Mon–Fri 10am–6pm · Sat 10am–5pm</div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="4" width="20" height="16" rx="1" stroke="#C9A96E" stroke-width="1.3" fill="none"/>
+            <path d="M2 7l10 7 10-7" stroke="#C9A96E" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="contact-card-body">
+          <div class="contact-card-label">Email Us</div>
+          <div class="contact-card-value"><a href="mailto:info@onesoulgifts.com">info@onesoulgifts.com</a></div>
+          <div class="contact-card-sub">We reply within one business day</div>
+        </div>
+      </div>
+
+      <!-- Hours -->
+      <div class="hours-strip">
+        <div class="hours-strip-label">Store Hours</div>
+        <div class="hours-grid">
+          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">10am – 6pm</span></div>
+          <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10am – 5pm</span></div>
+          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">Closed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT FORM -->
+  <div class="contact-form-wrap">
+    <h3 class="form-heading">Send Us a <em>Message</em></h3>
+    <p class="form-subheading">Questions, gift ideas, bulk orders, or simply a kind word — we'd love to hear from you.</p>
+
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-row split">
+        <div>
+          <label class="form-label" for="firstName">First Name</label>
+          <input class="form-input" type="text" id="firstName" name="firstName" placeholder="Your first name" required>
+        </div>
+        <div>
+          <label class="form-label" for="lastName">Last Name</label>
+          <input class="form-input" type="text" id="lastName" name="lastName" placeholder="Your last name" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="subject">Subject</label>
+        <select class="form-select" id="subject" name="subject">
+          <option value="">Select a topic…</option>
+          <option value="product">Product Inquiry</option>
+          <option value="order">Order Question</option>
+          <option value="gift">Gift Consultation</option>
+          <option value="wholesale">Wholesale / Bulk Orders</option>
+          <option value="visit">Visiting the Store</option>
+          <option value="other">Something Else</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="message">Your Message</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what's on your mind…" required></textarea>
+      </div>
+
+      <button type="submit" class="form-submit">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M22 2L15 22 11 13 2 9l20-7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        Send Message
+      </button>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="success-check">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12L10 17L19 7" stroke="#8A9E8C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Message Sent</h3>
+      <p>Thank you for reaching out. We'll be in touch within one business day.<br><br>
+      <em style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--blush)">"Every connection begins with a single kind word."</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- MAP SECTION -->
+<div class="map-section">
+  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80" alt="Oregon landscape">
+  <div class="map-overlay">
+    <p class="map-overlay-label">Find Us</p>
+    <h3>One Soul Collective</h3>
+    <p>123 One Soul Street · Eugene, OR 97401<br>In the heart of downtown, near the Willamette River</p>
+    <a href="https://maps.google.com/?q=Eugene+OR" target="_blank" class="map-cta">Open in Google Maps</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-name">One <em>Soul</em> Collective</span>
+      <p class="footer-desc">Curated wellness gifts rooted in the wisdom of traditional Chinese practice — for energy, balance, and the beauty of living well. Every item chosen with love, for the people who matter most.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Collections</h4>
+      <ul>
+        <li><a href="index.html#shop">TCM & Herbal</a></li>
+        <li><a href="index.html#shop">Physical Wellness</a></li>
+        <li><a href="index.html#shop">Symbolic & Lifestyle</a></li>
+        <li><a href="index.html#shop">Good Fortune</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Gift Wrapping</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 One Soul Collective · All rights reserved</span>
+    <span>Gifts that touch the soul you love.</span>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+
+  // Animate form out
+  form.style.transition = 'opacity 0.3s, transform 0.3s';
+  form.style.opacity = '0';
+  form.style.transform = 'translateY(-10px)';
+  setTimeout(() => {
+    form.style.display = 'none';
+    success.classList.add('show');
+    success.style.animation = 'fadeUp 0.6s ease forwards';
+  }, 300);
+}
+</script>
+</body>
+</html>
